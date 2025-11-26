@@ -35,5 +35,9 @@ UPDATE dbo.Users
 SET fullName = 'Phạm Mai Hương'
 WHERE id = 1;
 
+-- Xóa thông tin User
+DELETE dbo.Users
+WHERE id = 1;
+
 -- Lấy User ra
 SELECT * FROM dbo.Users;
