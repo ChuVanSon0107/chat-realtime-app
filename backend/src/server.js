@@ -1,8 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
 import authRoutes from "./routes/auth.route.js";
+import { getConnection } from "./lib/database.js";
 
-// Để có thể load các biến môi trường và sử dụng
+// load các biến môi trường để sử dụng
 dotenv.config();
 
 const app = express();
@@ -13,4 +14,5 @@ app.use("/api/auth", authRoutes)
 
 app.listen(PORT, () => {  
   console.log(`Server is running on port ${PORT}`);
-});
+  getConnection();
+});   
