@@ -1,0 +1,126 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f7f7f7;
+}
+
+.container {
+  display: grid;
+  min-height: 100vh;
+  grid-template-columns: 1fr 1fr;
+}
+
+.left {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.wrapper {
+  width: 100%;
+  max-width: 380px;
+}
+
+.logo-section {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-box {
+  width: 50px;
+  height: 50px;
+  background: #dbeafe;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  margin: auto;
+  font-size: 22px;
+}
+
+.form-control {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.input-icon {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+input {
+  width: 100%;
+  padding: 12px 12px 12px 36px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+}
+
+input:focus {
+  border-color: #2563eb;
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: #2563eb;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: #1e4fcf;
+}
+
+.signin-text {
+  margin-top: 20px;
+  text-align: center;
+  color: #666;
+}
+
+.signin-text a {
+  color: #2563eb;
+  text-decoration: none;
+}
+
+.right {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  color: rgb(57, 53, 53);
+  text-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+.auth-pattern {
+  max-width: 350px;
+  text-align: center;
+}
+
+.auth-pattern h2 {
+  font-size: 28px;
+}
+
+.auth-pattern p {
+  font-size: 16px;
+  opacity: 0.9;
+}
