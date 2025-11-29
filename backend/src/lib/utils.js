@@ -10,10 +10,12 @@ dotenv.config();
 export const generateToken = async (id, res) => {
   const TTL = 7; // số ngày
 
+  // Kí => tạo token
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {
     expiresIn: `${TTL}d`, // Hạn sử dụng token
   });
 
+  // Lưu token vào cookie của respone trả về
   res.cookie("jwt", token, {
     maxAge: TTL * 24 *  60 * 60 * 1000, // miliseconds
     httpOnly: true, // ngăn chặn tấn công XSS (cross-site scripting attacks)

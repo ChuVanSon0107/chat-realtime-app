@@ -12,10 +12,10 @@ export const Users = {
       .input("hashedPassword", sql.NVarChar(100), hashedPassword)
       .query(`
         INSERT INTO Users (fullName, email, hashedPassword)
-        VALUES (@fullName, @email, @hashedPassword)
-        SELECT SCOPE_IDENTITY() AS id
+        VALUES (@fullName, @email, @hashedPassword);
+        SELECT * FROM Users WHERE email = @email;
       `);
-      // Câu lệnh INSERT INTO thì chỉ trả lời số lượng dòng bị ảnh hưởng => muốn trả lại recordset thì phải thêm SCOPE_IDENTITY()
+      // Câu lệnh INSERT INTO thì chỉ trả lời số lượng dòng bị ảnh hưởng
 
     return result.recordset[0]; // Lấy dòng đầu tiên của bảng đầu tiên trả về từ query
   },

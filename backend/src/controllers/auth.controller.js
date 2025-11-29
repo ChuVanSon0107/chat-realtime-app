@@ -35,13 +35,14 @@ export const signup = async (req, res) => {
     });
 
     if (newUser) {
-      // Tạo token và trả về cho client
+      // Tạo token và trả về cho client => Không cần đăng nhập lại khi gửi request
       generateToken(newUser.id, res);
 
       return res.status(201).json({
         id: newUser.id,
         fullName: newUser.fullName,
-        email: newUser.email
+        email: newUser.email,
+        profilePic: newUser.profilePic,
       });
     } else {
       // Không tạo được người dùng mới
@@ -56,12 +57,52 @@ export const signup = async (req, res) => {
 
 
 // Đăng nhập
-export const signin = async () => {
-  console.log("Đăng nhập!");
+export const signin = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    // Tìm người dùng dựa theo email
+    const user = await Users.findByEmail(email);
+
+    // Người dùng không tồn tại
+    if (!user) {
+      return res.status(400).json({ message: "Email hoặc mật khẩu không chính xác!" });
+    }
+
+    // Kiểm tra mật khẩu
+    const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword);
+
+    // Mật khẩu không đúng
+    if (!isPasswordCorrect) {
+      return res.status(400).json({ message: "Email hoặc mật khẩu không chính xác!" });
+    }
+
+    // Mật khẩu đúng => Tạo token và đính vào response trả về
+    generateToken(user.id, res);
+
+    // Trả về thông tin người dùng
+    return res.status(200).json({
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      profilePic: user.profilePic,
+    });
+
+  } catch (error) {
+    console.error("❌ Lỗi trong signin controller: ", error.message);
+    return res.status(500).json({ message: "Lỗi server!" });
+  }
 };
 
 
 // Đăng xuất
-export const signout = async () => {
-  console.log("Đăng xuất!");
+export const signout = async (req, res) => {
+  try {
+    // Đăng xuất => xóa jwt token trong cookie
+    res.cookie("jwt", "", { maxAge: 0 });
+    return res.status(200).json({ message: "Đăng xuất thành công!" });
+  } catch (error) {
+    console.error("❌ Lỗi trong signout controller: ", error.message);
+    return res.status(500).json({ message: "Lỗi server!" });
+  }
 };
