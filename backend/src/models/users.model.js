@@ -15,7 +15,6 @@ export const Users = {
         VALUES (@fullName, @email, @hashedPassword);
         SELECT * FROM Users WHERE email = @email;
       `);
-      // Câu lệnh INSERT INTO thì chỉ trả lời số lượng dòng bị ảnh hưởng
 
     return result.recordset[0]; // Lấy dòng đầu tiên của bảng đầu tiên trả về từ query
   },

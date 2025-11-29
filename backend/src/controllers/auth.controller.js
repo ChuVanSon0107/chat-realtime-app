@@ -106,3 +106,20 @@ export const signout = async (req, res) => {
     return res.status(500).json({ message: "Lỗi server!" });
   }
 };
+
+
+// Kiểm tra quyền truy cập
+export const checkAuth = async (req, res) => {
+  try {
+    const user = req.user;
+    return res.status(200).json({
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      profilePic: user.profilePic,
+    });
+  } catch (error) {
+    console.error("❌ Lỗi trong checkAuth controller: ", error.message);
+    return res.status(500).json({ message: "Lỗi server!" });
+  }
+}
