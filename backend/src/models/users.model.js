@@ -50,4 +50,22 @@ export const Users = {
 
     return result.recordset[0]; // Lấy dòng đầu tiên của bảng đầu tiên trả về từ query
   },
+
+  // Cập nhật ảnh đại diện
+  async updateProfilePic(id) {
+    const connection = await getConnection();
+    const result = await connection
+      .request()
+      .input("id", sql.BigInt, id)
+      .input("profilePic", sql.NVarChar(1000), profilePic)
+      .query(`UPDATE Users
+              SET profilePic = @profilePic
+              WHERE id = @id;
+              SELECT * FROM Users WHERE id = @id;
+      `);
+    
+      return result.recordset[0];
+  },
+
+  
 };

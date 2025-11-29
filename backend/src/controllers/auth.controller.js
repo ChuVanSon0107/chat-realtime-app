@@ -1,6 +1,7 @@
 import { generateToken } from "../lib/utils.js";
 import { Users } from "../models/users.model.js";
 import bcrypt from "bcryptjs";
+import cloudinary from "../lib/cloudinary.js";
 
 // Đăng kí
 export const signup = async (req, res) => {
@@ -122,4 +123,38 @@ export const checkAuth = async (req, res) => {
     console.error("❌ Lỗi trong checkAuth controller: ", error.message);
     return res.status(500).json({ message: "Lỗi server!" });
   }
-}
+};
+
+// Cập nhật ảnh đại diện
+export const updateProfile = async (req, res) => {
+  try {
+    // Lấy đường dẫn ảnh trong body
+    const { profilePic } = req.body;
+
+    // Lấy id của user trong request (đã được middleware checkToken xác thực quyền rồi => đính user vào request)
+    const userId = req.user.id;
+
+    // Không có profile picture
+    if (!profilePic) {
+      return res.status(400).json({ message: "Không có ảnh đại diện để cập nhật!" });
+    }
+
+    // upload ảnh lên cloudinary
+    const uploadResponse = await cloudinary.uploader.upload(profilePic);
+
+    // Cập nhật ảnh địa diện của người dùng
+    const updatedUser = await Users.updateProfilePic(userId, uploadResponse.secure_url);
+
+    // Trả thông tin người dùng về cho client
+    return res.status(200).json({
+      id: updatedUser.id,
+      fullName: updatedUser.fullName,
+      email: updatedUser.email,
+      profilePic: updatedUser.profilePic
+    });
+
+  } catch (error) {
+    console.error("❌ Lỗi trong updateProfile controller: ", error.message);
+    return res.status(500).json({ message: "Lỗi server!" });
+  } 
+};
