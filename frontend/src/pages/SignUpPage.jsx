@@ -1,6 +1,6 @@
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 import styles from './SignUpPage.module.css';
-import { useState, useEffect } from 'react';
+import { useState} from 'react';
 import { useAuthStore } from '../stores/useAuthStore';
 
 import toast from "react-hot-toast";
@@ -15,7 +15,7 @@ export function SignUpPage() {
     password: "",
   });
 
-  const { signup, isSigningUp, authUser } = useAuthStore();
+  const { signup, isSigningUp } = useAuthStore();
 
   const validateForm = () => {
     if (!formData.fullName.trim()) return toast.error("Bạn chưa điền Họ và tên!");
@@ -26,15 +26,6 @@ export function SignUpPage() {
 
     return true;
   };
-
-  const navigate = useNavigate();
-
-  // Dùng để chuyển hướng sang chat
-  useEffect(() => {
-    if (authUser) {
-      navigate('/chat');
-    }
-  }, [authUser, navigate]);
 
   const submit = async (event) => {
     event.preventDefault();

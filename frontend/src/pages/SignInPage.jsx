@@ -1,12 +1,12 @@
 import { Loader2, EyeOff, Eye } from "lucide-react";
 import styles from './SignInPage.module.css';
 import { useAuthStore } from '../stores/useAuthStore.js';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router';
+import { Link } from 'react-router';
 
 export const SignInPage = () => {
-  const { isSigningIn, signin, authUser } = useAuthStore();
+  const { isSigningIn, signin } = useAuthStore();
   const [showPassword, setShowPassword] = useState(false);
   
   // Lấy tài khoản, mật khẩu trong localStorage
@@ -27,14 +27,6 @@ export const SignInPage = () => {
     return true;
   };
 
-  const navigate = useNavigate();
-
-  // Dùng để chuyển hướng sang chat
-  useEffect(() => {
-    if (authUser) {
-      navigate('/chat');
-    }
-  }, [authUser, navigate]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -49,10 +41,7 @@ export const SignInPage = () => {
 
       // Gửi api đăng nhập
       await signin(formData);
-      
-      if (authUser) {
-        navigate('/chat');
-      }
+
     }
   }
 

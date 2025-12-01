@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { HomePage } from './pages/HomePage.jsx';
 import { SignInPage } from './pages/SignInPage.jsx';
 import { SignUpPage } from './pages/SignUpPage.jsx';
@@ -28,10 +28,10 @@ export const App = () => {
 
       <Routes>
         <Route path='/' element={<HomePage />} />
-        <Route path='/signin' element={<SignInPage />} />
-        <Route path='/signup' element={<SignUpPage />} />
-        <Route path='/profile' element={authUser ? <ProfilePage /> : <SignInPage />} />
-        <Route path='/chat' element={authUser ? <ChatPage /> : <SignInPage /> } />
+        <Route path='/signin' element={authUser ? <Navigate to='/chat' /> : <SignInPage />} />
+        <Route path='/signup' element={authUser ? <Navigate to='/chat' /> : <SignUpPage />} />
+        <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to='/signin' />} />
+        <Route path='/chat' element={authUser ? <ChatPage /> : <Navigate to='/signin' /> } />
         <Route path='/*' element={<NotFoundPage />} />
       </Routes>
     </>
