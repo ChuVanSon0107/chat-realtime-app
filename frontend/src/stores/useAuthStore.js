@@ -1,0 +1,66 @@
+import { create } from 'zustand';
+import { axiosInstance } from '../lib/axios.js';
+import toast from 'react-hot-toast';
+
+
+export const useAuthStore = create((set, get) => ({
+  authUser: null,
+  isSigningUp: false,
+  isSigningIn: false,
+  isUpdatingProfile: false,
+  isCheckingAuth: true,
+
+  // Kiểm tra xem người dùng đã đăng nhập trước đó hay chưa => xác thực người dùng
+  // Gọi khi reload lại page
+  checkAuth: async () => {
+    set({ isCheckingAuth: true });
+    try {
+      const res = await axiosInstance.get('/auth/check-auth');
+      set({ authUser: res.data });
+    } catch (error) {
+      console.error("❌ Lỗi trong checkAuth:", error);
+      set({ authUser: null });
+    } finally {
+      set({ isCheckingAuth: false });
+    }
+  },
+
+  // Gọi api đăng kí của server
+  signup: async (data) => {
+    set({ isSigningUp: true });
+    try {
+      const res = await axiosInstance.post('/auth/signup', data);
+      set({ authUser: res.data });
+      toast.success("Tạo tài khoản thành công");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isSigningUp: false });
+    }
+  },
+
+  // Gọi api đăng nhập của server
+  signin: async (data) => {
+    set({ isSigningIn: true });
+    try {
+      const res = await axiosInstance.post('/auth/signin', data);
+      set({ authUser: res.data });
+      toast.success("Đăng nhập thành công!");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isSigningIn: false });
+    }
+  },
+
+  // Gọi api đăng xuất của server
+  signout: async () => {
+    try {
+      await axiosInstance.post('/auth/signout');
+      set({ authUser: null });
+      toast.success("Đăng xuất thành công!");
+    } catch (error) {
+      toast.error(error.response.data.message);
+    } 
+  },
+}));
