@@ -41,7 +41,9 @@ export function SignUpPage() {
       <div className={styles.signUpPage}>
         <div className={styles.signUpContainer}>
           <div className={styles.signUpLeft}>
-            <img src="images/sign-up.jpg" alt="hust" />
+            <div className={styles.imageContainer}>
+              <img src="images/sign-up.jpg" alt="hust" />
+            </div>
           </div>
           <div className={styles.signUpRight}>
             <div>

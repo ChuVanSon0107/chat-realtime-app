@@ -52,7 +52,9 @@ export const SignInPage = () => {
       <div className={styles.signInPage}>
         <div className={styles.signInContainer}>
           <div className={styles.signInLeft}>
-            <img src="images/sign-in.jpg" alt="hust-image" />
+            <div className={styles.imageContainer}>
+              <img src="images/sign-in.jpg" alt="hust-image" />
+            </div>
           </div>
 
           <div className={styles.signInRight}>

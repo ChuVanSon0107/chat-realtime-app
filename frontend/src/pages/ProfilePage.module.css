@@ -1,0 +1,112 @@
+.profilePage {
+  font-family: Roboto Arial;
+  margin-top: 60px;
+}
+
+.header {
+  text-align: center;
+  font-size: 40px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.profilePageBody {
+  display: flex;
+  flex-direction: row;
+}
+
+/* Left Section */
+.leftSection {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatarContainer {
+  position: relative;
+  width: 300px;
+  height: 300px;
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.uploadAvatarSection {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+}
+
+.cameraIcon {
+  color: rgb(34, 136, 136);
+}
+
+.inputAvatar {
+  display: none;
+}
+
+/* Right Section */
+.rightSection {
+  padding: 50px;
+  flex: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.informationContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.information {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgb(111, 111, 111); 
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+
+  max-width: 500px;
+  padding: 15px 15px;
+  border-radius: 10px;
+
+  background-color: #f9fafb;
+  border: 1px solid #b7b8ba;
+
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.info:hover {
+  background-color: #f3f4f6;
+  border-color: #838384;
+}
+
+.icon {
+  font-size: 24px;
+  color: #6366f1; /* indigo-500 */
+  flex-shrink: 0;
+}
+
+.detail {
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+}

@@ -8,7 +8,7 @@ dotenv.config();
 // Để người dùng có thể dùng cái token này cho những request sau mà không cần đăng nhập lại
 // Truyền vào id của user và response
 export const generateToken = async (id, res) => {
-  const TTL = 7; // số ngày
+  const TTL = 1; // số ngày
 
   // Kí => tạo token
   const token = jwt.sign({ id }, process.env.JWT_SECRET, {

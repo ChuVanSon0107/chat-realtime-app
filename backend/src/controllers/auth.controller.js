@@ -128,21 +128,16 @@ export const checkAuth = async (req, res) => {
 // Cập nhật ảnh đại diện
 export const updateProfile = async (req, res) => {
   try {
-    // Lấy đường dẫn ảnh trong body
+    // Lấy ảnh trong body
     const { profilePic } = req.body;
-
-    // Lấy id của user trong request (đã được middleware checkToken xác thực quyền rồi => đính user vào request)
     const userId = req.user.id;
 
-    // Không có profile picture
     if (!profilePic) {
       return res.status(400).json({ message: "Không có ảnh đại diện để cập nhật!" });
     }
 
     // upload ảnh lên cloudinary
     const uploadResponse = await cloudinary.uploader.upload(profilePic);
-
-    // Cập nhật ảnh địa diện của người dùng
     const updatedUser = await Users.updateProfilePic(userId, uploadResponse.secure_url);
 
     // Trả thông tin người dùng về cho client

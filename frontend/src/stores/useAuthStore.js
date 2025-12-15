@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { axiosInstance } from '../lib/axios.js';
 import toast from 'react-hot-toast';
 
-
 export const useAuthStore = create((set, get) => ({
   authUser: null,
   isSigningUp: false,
@@ -63,4 +62,19 @@ export const useAuthStore = create((set, get) => ({
       toast.error(error.response.data.message);
     } 
   },
+
+  updateProfile: async (data) => {
+    set({ isUpdatingProfile: true });
+    try {
+      console.log(data);
+      const res = await axiosInstance.put("/auth/update-profile", data);
+      set({ authUser: res.data });
+      toast.success("Cập nhật ảnh đại diện thành công!")
+    } catch (error) {
+      console.log("Lỗi trong cập nhật ảnh đại diện: ", error);
+      toast.error(error.response.data.message);
+    } finally {
+      set({ isUpdatingProfile: false });
+    }
+  }
 }));

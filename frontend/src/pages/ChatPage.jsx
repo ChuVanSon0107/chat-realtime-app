@@ -1,10 +1,9 @@
-import { useAuthStore } from '../stores/useAuthStore'
+import { NavBar } from '../components/NavBar';
 
 export const ChatPage = () => {
-  const { signout } = useAuthStore();
   return (
     <div>
-      <button onClick={signout}>Sign out</button>
+      <NavBar />
     </div>
   )
 }

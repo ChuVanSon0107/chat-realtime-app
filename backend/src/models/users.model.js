@@ -52,7 +52,7 @@ export const Users = {
   },
 
   // Cập nhật ảnh đại diện
-  async updateProfilePic(id) {
+  async updateProfilePic(id, profilePic) {
     const connection = await getConnection();
     const result = await connection
       .request()
