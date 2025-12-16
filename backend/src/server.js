@@ -2,7 +2,9 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
+import friendRoutes from './routes/friend.route.js';
 import cors from 'cors';
+import { checkToken } from "./middlewares/auth.middleware.js";
 
 // load các biến môi trường để sử dụng
 dotenv.config();
@@ -23,7 +25,12 @@ app.use(
   })
 );
 
+// public routes
 app.use("/api/auth", authRoutes);
+
+// private routes
+app.use(checkToken);
+app.use("/api/friend", friendRoutes);
 
 app.listen(PORT, () => {  
   console.log(`Server is running on port ${PORT}`);

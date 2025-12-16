@@ -65,15 +65,12 @@ export const signin = async (req, res) => {
     // Tìm người dùng dựa theo email
     const user = await Users.findByEmail(email);
 
-    // Người dùng không tồn tại
     if (!user) {
       return res.status(400).json({ message: "Email hoặc mật khẩu không chính xác!" });
     }
 
-    // Kiểm tra mật khẩu
     const isPasswordCorrect = await bcrypt.compare(password, user.hashedPassword);
 
-    // Mật khẩu không đúng
     if (!isPasswordCorrect) {
       return res.status(400).json({ message: "Email hoặc mật khẩu không chính xác!" });
     }
@@ -81,7 +78,6 @@ export const signin = async (req, res) => {
     // Mật khẩu đúng => Tạo token và đính vào response trả về
     generateToken(user.id, res);
 
-    // Trả về thông tin người dùng
     return res.status(200).json({
       id: user.id,
       fullName: user.fullName,
