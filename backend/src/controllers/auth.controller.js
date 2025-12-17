@@ -8,24 +8,19 @@ export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
 
   try {
-    // Kiểm tra xem trường nào còn trống không
     if (!fullName || !password || !email) {
       return res.status(400).json({ message: "Tất cả các trường phải được điền!" });
     }
-
-    // Kiểm tra độ dài mật khẩu
     if (password.length < 6) {
       return res.status(400).json({ message: "Mật khẩu phải có chiều dài lớn hơn hoặc bằng 6!" });
     }
     
-    // Tìm xem email này đã được đăng kí hay chưa
     const existingUser = await Users.findByEmail(email);
 
     if (existingUser) {
       return res.status(400).json({ message: "Email này đã được đăng kí!" });
     }
 
-    // Email chưa được đăng kí => cho phép tạo tài khoản mới
     const salt = await bcrypt.genSalt(10); // Tạo salt để băm cùng password
     const hashedPassword = await bcrypt.hash(password, salt); // băm mật khẩu
 
@@ -62,7 +57,6 @@ export const signin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Tìm người dùng dựa theo email
     const user = await Users.findByEmail(email);
 
     if (!user) {

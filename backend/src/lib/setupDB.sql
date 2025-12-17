@@ -39,7 +39,6 @@ CREATE TABLE FriendRequest (
 	senderId BIGINT NOT NULL,
 	receiverId BIGINT NOT NULL,
 	message NVARCHAR(300),
-	status VARCHAR(20) CHECK(status IN('accepted', 'pending', 'declined')),
 	createdAt DATETIME NOT NULL DEFAULT GETDATE(),
 
 	CONSTRAINT FK_fr_sender FOREIGN KEY (senderId) REFERENCES Users(id),
@@ -97,11 +96,11 @@ CREATE NONCLUSTERED INDEX idx_friendship_user1
 ON Friendship (user1Id, user2Id);
 
 CREATE NONCLUSTERED INDEX idx_friendRequest_receiver_status 
-ON FriendRequest (receiverId, status, createdAt DESC)
+ON FriendRequest (receiverId, createdAt DESC)
 INCLUDE (senderId);
 
 CREATE NONCLUSTERED INDEX idx_friendRequest_sender
-ON FriendRequest (senderId, status, createdAt DESC)
+ON FriendRequest (senderId, createdAt DESC)
 INCLUDE (receiverId);
 
 CREATE NONCLUSTERED INDEX idx_conversationMember_user
@@ -130,3 +129,7 @@ END;
 
 -- Lấy User ra
 SELECT * FROM Users;
+
+SELECT * FROM FriendRequest;
+
+SELECT * FROM Friendship;
