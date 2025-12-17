@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth.route.js";
+import userRoutes from './routes/user.route.js';
 import friendRoutes from './routes/friend.route.js';
 import friendRequestRoutes from './routes/friendRequest.route.js';
 import cors from 'cors';
@@ -33,6 +34,7 @@ app.use("/api/auth", authRoutes);
 app.use(checkToken);
 app.use("/api/friends", friendRoutes);
 app.use("/api/friend-requests", friendRequestRoutes);
+app.use("/api/users", userRoutes);
 
 app.listen(PORT, () => {  
   console.log(`Server is running on port ${PORT}`);

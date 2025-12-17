@@ -67,5 +67,19 @@ export const Users = {
       return result.recordset[0];
   },
 
-  
+  async findByName({ name, userId }) {
+    const connection = await getConnection();
+    const result = await connection
+      .request()
+      .input("name", sql.NVarChar(50), name)
+      .input("userId", sql.BigInt, userId)
+      .query(`
+        SELECT id, fullName, profilePic
+        FROM Users
+        WHERE fullName LIKE '%' + @name + '%'
+          AND id <> @userId;
+        `);
+    
+    return result.recordset;
+  },
 };
