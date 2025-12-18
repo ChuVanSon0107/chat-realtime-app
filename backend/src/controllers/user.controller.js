@@ -13,7 +13,7 @@ export const searchUsers = async (req, res) => {
 
     return res.status(200).json(result);
   } catch (error) {
-    console.error("❌ Lỗi trong searchUsers", error);
+    console.error("❌ Lỗi trong searchUsers controller:", error);
     return  res.status(500).json({ message: "Lỗi server!" });
   }
 };

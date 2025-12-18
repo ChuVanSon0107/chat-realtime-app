@@ -45,7 +45,7 @@ export const sendFriendRequest = async (req, res) => {
 
     return res.status(201).json({ message: "Gửi lời mời kết bạn thành công", request });
   } catch (error) {
-    console.error("❌ Lỗi trong sendFriendRequest", error);
+    console.error("❌ Lỗi trong sendFriendRequest controller: ", error);
     return  res.status(500).json({ message: "Lỗi server!" });
   }
 };
@@ -75,7 +75,7 @@ export const acceptFriendRequest = async (req, res) => {
 
     return res.status(200).json({ message: "Chấp nhận lời mời kết bạn thành công", request });
   } catch(error) {
-    console.error("❌ Lỗi trong acceptFriendRequest", error);
+    console.error("❌ Lỗi trong acceptFriendRequest controller: ", error);
     return  res.status(500).json({ message: "Lỗi server!" });
   }
 };
@@ -98,7 +98,7 @@ export const declineFriendRequest = async (req, res) => {
 
     return res.status(200).json({ message: "Từ chối lời mời kết bạn thành công" });
   } catch (error) {
-    console.error("❌ Lỗi trong declineFriendRequest", error);
+    console.error("❌ Lỗi trong declineFriendRequest controller:", error);
     return  res.status(500).json({ message: "Lỗi server!" });
   }
 };
@@ -115,7 +115,7 @@ export const getAllFriendRequests = async (req, res) => {
 
     return res.status(200).json({ sent, received });
   } catch (error) {
-    console.error("❌ Lỗi trong getALllFriendRequests", error);
+    console.error("❌ Lỗi trong getALllFriendRequests controller: ", error);
     return  res.status(500).json({ message: "Lỗi server!" });
   }
 };

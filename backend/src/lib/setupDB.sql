@@ -50,7 +50,7 @@ CREATE TABLE Conversation (
 	id BIGINT IDENTITY(1, 1) PRIMARY KEY,
 	type VARCHAR(20) NOT NULL CHECK (type IN ('personal', 'group')),
 	name NVARCHAR(100),
-	creatorId BIGINT NOT NULL,
+	creatorId BIGINT,
 	createdAt DATETIME NOT NULL DEFAULT GETDATE(),
 
 	CONSTRAINT FK_converation_creator FOREIGN KEY (creatorId) REFERENCES Users(id)

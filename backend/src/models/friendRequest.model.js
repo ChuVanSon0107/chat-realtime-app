@@ -65,7 +65,7 @@ export const FriendRequest = {
       .request()
       .input('receiverId', sql.BigInt, receiverId)
       .query(`
-          SELECT DISTINCT Users.id, requestId, fullName, profilePic
+          SELECT DISTINCT Users.id AS senderId, requestId, fullName, profilePic
           FROM Users JOIN (SELECT senderId AS id, id AS requestId FROM FriendRequest WHERE receiverId = @receiverId) AS Sender
           ON Users.id = Sender.id;
         `);
@@ -80,7 +80,7 @@ export const FriendRequest = {
       .request()
       .input('senderId', sql.BigInt, senderId)
       .query(`
-          SELECT DISTINCT Users.id, requestId, fullName, profilePic
+          SELECT DISTINCT Users.id AS receiverId, requestId, fullName, profilePic
           FROM Users JOIN (SELECT receiverId AS id, id AS requestId FROM FriendRequest WHERE senderId = @senderId) AS Receiver
           ON Users.id = Receiver.id;
         `);

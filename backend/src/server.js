@@ -5,6 +5,8 @@ import authRoutes from "./routes/auth.route.js";
 import userRoutes from './routes/user.route.js';
 import friendRoutes from './routes/friend.route.js';
 import friendRequestRoutes from './routes/friendRequest.route.js';
+import conversationRoutes from './routes/conversation.route.js';
+import messageRoutes from './routes/message.route.js';
 import cors from 'cors';
 import { checkToken } from "./middlewares/auth.middleware.js";
 
@@ -35,6 +37,8 @@ app.use(checkToken);
 app.use("/api/friends", friendRoutes);
 app.use("/api/friend-requests", friendRequestRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/conversations", conversationRoutes);
+app.use("/api/messages", messageRoutes);
 
 app.listen(PORT, () => {  
   console.log(`Server is running on port ${PORT}`);

@@ -7,7 +7,7 @@ export const getAllFriends = async (req, res) => {
 
     return res.status(200).json(friend);
   } catch (error) {
-    console.error("❌ Lỗi trong getAllFriends", error);
+    console.error("❌ Lỗi trong getAllFriend controller:", error);
     return  res.status(500).json({ message: "Lỗi server!" });
   }
 };

@@ -57,5 +57,20 @@ export const Friendship = {
         `);
     
     return result.recordset;
-  }
+  },
+
+  async checkFriendship({ user1Id, user2Id }) {
+    const connection = await getConnection();
+    const result = await connection
+      .request()
+      .input('user1Id', sql.BigInt, user1Id)
+      .input('user2Id', sql.BigInt, user2Id)
+      .query(`
+        SELECT 1
+        FROM Friendship
+        WHERE user1Id = @user1Id AND user2Id = @user2Id;
+        `);
+
+    return result.recordset[0];
+  },
 }
