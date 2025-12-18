@@ -86,4 +86,19 @@ export const Conversation = {
       members: c.members ? JSON.parse(c.members) : []
     }));
   },
+
+  async isMember({ conversationId, userId }) {
+    const connection = await getConnection();
+    const result = await connection
+      .request()
+      .input('conversationId', sql.BigInt, conversationId)
+      .input('userId', sql.BigInt, userId)
+      .query(`
+        SELECT 1
+        FROM ConversationMember
+        WHERE conversationId = @conversationId AND userId = @userId;
+        `);
+    
+    return result.recordset[0];
+  },
 };
