@@ -111,6 +111,10 @@ CREATE NONCLUSTERED INDEX idx_message_Message_created
 ON Message (conversationId, createdAt DESC, id DESC)
 INCLUDE (senderId, content, image, isDeleted);
 
+CREATE NONCLUSTERED INDEX idx_message_conversationId
+ON Message (conversationId, id DESC)
+INCLUDE (senderId, content, image, createdAt, isDeleted);
+
 CREATE NONCLUSTERED INDEX idx_conversationRead_user
 ON ConversationRead (userId)
 INCLUDE (conversationId, lastReadAt);
@@ -133,3 +137,11 @@ SELECT * FROM Users;
 SELECT * FROM FriendRequest;
 
 SELECT * FROM Friendship;
+
+SELECT * FROM Conversation;
+
+SELECT * FROM ConversationMember;
+
+SELECT * FROM ConversationRead;
+
+SELECT * FROM Message;

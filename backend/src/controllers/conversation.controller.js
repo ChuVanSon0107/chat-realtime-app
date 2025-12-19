@@ -67,8 +67,6 @@ export const createConversation = async (req, res) => {
       // Thêm thành viên
       await Conversation.insertConversationMember({ conversationId, userId, role: "member" });
       await Conversation.insertConversationMember({ conversationId, userId: memberIds[0], role: "member" });
-      await Conversation.updateLastReadAt({ conversationId, userId });
-      await Conversation.updateLastReadAt({ conversationId, userId: memberIds[0] });
 
       return res.status(200).json({ message: "Bạn đã tạo thành công", conversationId });
     }
@@ -81,11 +79,9 @@ export const createConversation = async (req, res) => {
 
       // Thêm thành viên
       await Conversation.insertConversationMember({ conversationId, userId, role: "admin" });
-      await Conversation.updateLastReadAt({ conversationId, userId });
 
       for (const memberId of memberIds) {
         await Conversation.insertConversationMember({ conversationId, userId: memberId, role: "member" });
-        await Conversation.updateLastReadAt({ conversationId, userId: memberId });
       }
 
       return res.status(200).json({ message: "Bạn đã tạo thành công", conversationId });

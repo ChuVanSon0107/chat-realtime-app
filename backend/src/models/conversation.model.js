@@ -44,8 +44,12 @@ export const Conversation = {
       .input('userId', sql.BigInt, userId)
       .input('role', sql.VarChar(20), role)
       .query(`
+        BEGIN TRANSACTION;
         INSERT INTO ConversationMember (conversationId, userId, role)
         VALUES (@conversationId, @userId, @role);
+        INSERT INTO ConversationRead (conversationId, userId)
+        VALUES (@conversationId, @userId);
+        COMMIT TRANSACTION;
         `);
   },
 

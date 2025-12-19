@@ -3,15 +3,21 @@ import { getConnection } from '../lib/database.js';
 
 export const Friendship = {
   // Hàm tạo 1 mối quan hệ bạn bè mới
-  async create({ user1Id, user2Id }) {
+  async create({ user1Id, user2Id, requestId }) {
     const connection = await getConnection();
     const result = await connection
       .request()
       .input("user1Id", sql.BigInt, user1Id)
       .input("user2Id", sql.BigInt, user2Id)
+      .input("requestId", sql.BigInt, requestId)
       .query(`
+        BEGIN TRANSACTION
         INSERT INTO Friendship (user1Id, user2Id)
-        VALUES (@user1Id, @user2Id)
+        VALUES (@user1Id, @user2Id);
+        DELETE FROM FriendRequest
+        WHERE id = @requestId;
+        COMMIT TRANSACTION;
+
         SELECT * FROM Friendship
         WHERE user1Id = @user1Id AND user2Id = @user2Id;
       `);
@@ -20,7 +26,7 @@ export const Friendship = {
   },
 
   async delete({ user1Id, user2Id }) {
-    const connection = getConnection();
+    const connection = await getConnection();
     const result = await connection
       .request()
       .input("user1Id", sql.BigInt, user1Id)

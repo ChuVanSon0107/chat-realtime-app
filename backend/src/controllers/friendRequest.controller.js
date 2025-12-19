@@ -70,8 +70,7 @@ export const acceptFriendRequest = async (req, res) => {
       [user1Id, user2Id] = [user2Id, user1Id];
     }
 
-    await Friendship.create({ user1Id, user2Id });
-    await FriendRequest.delete({ requestId });
+    await Friendship.create({ user1Id, user2Id, requestId });
 
     return res.status(200).json({ message: "Chấp nhận lời mời kết bạn thành công", request });
   } catch(error) {

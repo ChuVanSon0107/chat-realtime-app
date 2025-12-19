@@ -32,7 +32,7 @@ export const signup = async (req, res) => {
 
     if (newUser) {
       // Tạo token và trả về cho client => Không cần đăng nhập lại khi gửi request
-      generateToken(newUser.id, res);
+      await generateToken(newUser.id, res);
 
       return res.status(201).json({
         id: newUser.id,
@@ -70,7 +70,7 @@ export const signin = async (req, res) => {
     }
 
     // Mật khẩu đúng => Tạo token và đính vào response trả về
-    generateToken(user.id, res);
+    await generateToken(user.id, res);
 
     return res.status(200).json({
       id: user.id,
