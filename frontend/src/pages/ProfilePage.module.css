@@ -19,14 +19,15 @@
 .leftSection {
   flex: 1;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
 .avatarContainer {
   position: relative;
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
 }
 
 .avatar {
@@ -38,8 +39,8 @@
 
 .uploadAvatarSection {
   position: absolute;
-  bottom: 20px;
-  right: 20px;
+  bottom: 5px;
+  right: 5px;
   cursor: pointer;
 }
 
@@ -51,23 +52,17 @@
   display: none;
 }
 
-/* Right Section */
-.rightSection {
-  padding: 50px;
-  flex: 2;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-}
-
 .informationContainer {
   width: 100%;
+  margin-top: 30px;
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
 }
 
 .information {
+  width: 300px;
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -84,8 +79,8 @@
   align-items: center;
   gap: 20px;
 
-  max-width: 500px;
-  padding: 15px 15px;
+  max-width: 300px;
+  padding: 10px 10px;
   border-radius: 10px;
 
   background-color: #f9fafb;
@@ -110,3 +105,14 @@
   font-weight: 500;
   color: black;
 }
+
+
+/* Right Section */
+.rightSection {
+  padding: 50px;
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
