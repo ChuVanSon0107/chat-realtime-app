@@ -9,11 +9,10 @@ export const ChatSideBar = () => {
   const authUser = useAuthStore(state => state.authUser);
   const isLoadingConversations = useChatStore(state => state.isLoadingConversations);
   const isCreatingConversation = useChatStore(state => state.isCreatingConversation);
-  const selectedConversation = useChatStore(state => state.selectedConversation);
   const conversations = useChatStore(state => state.conversations);
   const fetchConversations = useChatStore(state => state.fetchConversations);
   const createConversation = useChatStore(state => state.createConversation);
-  const selectConversation = useChatStore(state => state.selectConversation);
+
 
   useEffect(() => {
     fetchConversations();

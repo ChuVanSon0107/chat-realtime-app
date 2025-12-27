@@ -1,13 +1,19 @@
 import styles from "./ConversationItem.module.css";
+import { useChatStore } from "../stores/useChatStore.js";
 
 export const ConversationItem = ({ conversation, authUser }) => {
   const { members, lastMessage, type, name } = conversation;
+  const selectConversation = useChatStore(state => state.selectConversation);
 
   // Chat cá nhân => lấy người còn lại
   const friend =
     type === "personal"
-      ? members.find(m => m.id !== authUser.id)
+      ? members.find(m => Number(m.id) !== Number(authUser.id))
       : null;
+    
+  if (friend) {
+    console.log(friend);
+  }
 
   const avatar =
     type === "personal"
@@ -19,7 +25,9 @@ export const ConversationItem = ({ conversation, authUser }) => {
   const lastText = lastMessage ? lastMessage.content || "📷 Ảnh" : "Chưa có tin nhắn";
 
   return (
-    <div className={styles.item}>
+    <div className={styles.item} onClick={() => {
+      selectConversation(conversation)
+    }}>
       <img src={avatar} className={styles.avatar} />
 
       <div className={styles.info}>
