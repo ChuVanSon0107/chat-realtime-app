@@ -3,11 +3,16 @@ import { useFriendStore } from '../stores/useFriendStore.js';
 import styles from './FriendRequests.module.css';
 
 export const FriendRequests = () => {
-  const { friendRequests, fetchFriendRequests, acceptFriendRequest, declineFriendRequest } = useFriendStore();
+  const friendRequests = useFriendStore(state => state.friendRequests);
+  const fetchFriendRequests = useFriendStore(state => state.fetchFriendRequests);
+  const acceptFriendRequest = useFriendStore(state => state.acceptFriendRequest);
+  const declineFriendRequest = useFriendStore(state => state.declineFriendRequest);
 
   useEffect(() => {
     fetchFriendRequests();
-  }, []);
+  }, [fetchFriendRequests]);
+
+  console.log(friendRequests);
 
   return (
     <div>

@@ -1,9 +1,16 @@
-import { NavBar } from '../components/NavBar';
+import { ChatSideBar } from "../components/ChatSideBar.jsx";
+import { ChatWindow } from "../components/ChatWindow.jsx";
+import { NavBar } from "../components/NavBar.jsx";
+import styles from './ChatPage.module.css';
 
 export const ChatPage = () => {
   return (
-    <div>
+    <>
       <NavBar />
-    </div>
+      <div className={styles.chatPageContainer}>
+        <ChatSideBar />
+        <ChatWindow />
+      </div>
+    </>
   )
 }

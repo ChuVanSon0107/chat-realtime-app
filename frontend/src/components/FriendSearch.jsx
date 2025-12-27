@@ -4,8 +4,11 @@ import { useFriendStore } from '../stores/useFriendStore.js';
 import { useAuthStore } from '../stores/useAuthStore.js';
 
 export const FriendSearch = () => {
-  const { authUser } = useAuthStore();
-    const { searchResults, searchUsers, isSearching, sendFriendRequest } = useFriendStore();
+  const authUser = useAuthStore(state => state.authUser);
+  const searchResults = useFriendStore(state => state.searchResults);
+  const searchUsers = useFriendStore(state => state.searchUsers);
+  const isSearching = useFriendStore(state => state.isSearching);
+  const sendFriendRequest = useFriendStore(state => state.sendFriendRequest);
 
   const [keyword, setKeyword] = useState("");
   const [message, setMessage] = useState(`Mình tên là ${authUser.fullName}. Mình làm quen nha. `)

@@ -1,0 +1,22 @@
+.section {
+  margin-bottom: 8px;
+  font-family: Roboto Arial;
+  font-size: 20px;
+}
+
+.sectionHeader {
+  padding: 10px 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  background: #f3f4f6;
+}
+
+.sectionHeader:hover {
+  background: #e5e7eb;
+}
+
+.list {
+  padding: 4px 0;
+}

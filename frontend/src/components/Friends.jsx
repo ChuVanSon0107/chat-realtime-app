@@ -9,7 +9,7 @@ export const Friends = () => {
 
   useEffect(() => {
     fetchFriends();
-  }, []);
+  }, [fetchFriends]);
 
   if (isLoadingFriends) {
     return <div>Đang tải...</div>

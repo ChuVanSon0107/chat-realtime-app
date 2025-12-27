@@ -71,13 +71,26 @@ export const Conversation = {
       .request()
       .input('userId', sql.BigInt, userId)
       .query(`
-        SELECT C.id AS conversationId, type, name, (
-          SELECT U.id AS userId, fullName, profilePic
+        SELECT C.id, type, name, 
+
+        -- Lấy members
+        (
+          SELECT U.id, fullName, profilePic
           FROM Users AS U
           JOIN ConversationMember AS CM1 ON CM1.userId = U.id
           WHERE CM1.conversationId = C.id
           FOR JSON PATH
-        ) AS members
+        ) AS members,
+
+        -- Lấy last message
+        (
+          SELECT TOP 1 M.id, M.content, M.image, M.senderId, M.createdAt
+          FROM Message AS M
+          WHERE M.conversationId = C.id
+          ORDER BY M.createdAt DESC
+          FOR JSON PATH, WITHOUT_ARRAY_WRAPPER
+        ) AS lastMessage
+        
         FROM Conversation AS C
         JOIN ConversationMember AS CM
         ON C.id = CM.conversationId
@@ -87,7 +100,8 @@ export const Conversation = {
 
     return result.recordset.map((c) => ({
       ...c,
-      members: c.members ? JSON.parse(c.members) : []
+      members: c.members ? JSON.parse(c.members) : [],
+      lastMessage: c.lastMessage ? JSON.parse(c.lastMessage) : null
     }));
   },
 
