@@ -1,7 +1,13 @@
 .sidebar {
   width: 320px;
-  height: 100vh;
+  height: 100%;
   border-right: 1px solid #e5e7eb;
   background: #fff;
-  overflow-y: auto;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  border-right: 1px solid lightgray;
 }

@@ -1,18 +1,15 @@
 .header {
   font-family: Roboto Arial;
   
-  position: fixed;
-  top: 0px;
-  left: 0px;
-  right: 0px;
+  flex-shrink: 0;
   height: 60px;
-  background-color: rgb(227, 227, 227);
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 
   background-color: rgb(233, 232, 232);
+  border-bottom: 1px solid lightgray;
 }
 
 /* Left section */

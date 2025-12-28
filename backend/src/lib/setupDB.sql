@@ -18,7 +18,7 @@ CREATE TABLE Users(
 	fullName NVARCHAR(50) NOT NULL,
 	email NVARCHAR(50) NOT NULL UNIQUE,
 	hashedPassword NVARCHAR(100) NOT NULL,
-	profilePic NVARCHAR(1000) NULL DEFAULT(''),
+	profilePic VARCHAR(MAX) NULL DEFAULT(''),
 	createdAt DATETIME NOT NULL DEFAULT GETDATE(),
 	updatedAt DATETIME NOT NULL DEFAULT GETDATE()
 );
@@ -72,7 +72,7 @@ CREATE TABLE Message (
 	conversationId BIGINT NOT NULL,
 	senderId BIGINT NOT NULL,
 	content NVARCHAR(MAX),
-	image NVARCHAR(1000),
+	image VARCHAR(MAX),
 	createdAt DATETIME DEFAULT GETDATE(),
 	isDeleted BIT DEFAULT 0,
 
@@ -130,6 +130,9 @@ BEGIN
 	SET updatedAt = GETDATE()
 	WHERE id IN (SELECT id FROM inserted);
 END;
+
+
+
 
 -- Lấy User ra
 SELECT * FROM Users;

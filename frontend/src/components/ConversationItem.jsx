@@ -18,7 +18,14 @@ export const ConversationItem = ({ conversation, authUser}) => {
       : "/images/avatar.png";
 
   const displayName = (type === "personal") ? friend?.fullName : name;
-  const lastText = lastMessage ? lastMessage.content || "📷 Ảnh" : "Chưa có tin nhắn";
+
+  let lastText;
+  if (Number(lastMessage.senderId) === Number(authUser.id)) {
+    lastText = lastMessage ? lastMessage.content || "Bạn: đã gửi ảnh" : "Chưa có tin nhắn";
+  } else {
+    lastText = lastMessage ? lastMessage.content || `${friend?.fullName}: đã gửi ảnh` : "Chưa có tin nhắn";
+  }
+
 
   const handleClick = async () => {
     if (!selectedConversation || conversation.id !== selectedConversation.id) {

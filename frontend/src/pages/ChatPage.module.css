@@ -1,6 +1,16 @@
-.chatPageContainer {
-  margin-top: 60px;
-  display: flex;
-  flex-direction: row;
+.app {
   font-family: Roboto Arial;
+
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.chatPageContainer {
+  flex: 1;
+
+  display: flex;
+  overflow: hidden;
+  flex-direction: row;
 }

@@ -7,7 +7,7 @@ export const Message = ({ message, authUser }) => {
     <div className={`${styles.row} ${isMine ? styles.mine : styles.other}`} >
       { !isMine && (
         <img 
-          src={message.profilePic || "images/avatar.png"}
+          src={message.profilePic || "/images/avatar.png"}
           className={styles.avatar}
         />
       ) }
@@ -26,7 +26,7 @@ export const Message = ({ message, authUser }) => {
           ) }
         </div>
 
-        <span className={styles.time}>
+        <span className={isMine ? styles.rightTime : styles.leftTime}>
           { new Date(message.createdAt).toLocaleTimeString("vi-VN", {
             hour: "2-digit",
             minute: "2-digit",

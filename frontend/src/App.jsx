@@ -22,7 +22,7 @@ export const App = () => {
   }
 
   return (
-    <>
+    <div>
       <Toaster />
 
       <Routes>
@@ -32,6 +32,6 @@ export const App = () => {
         <Route path='/profile' element={authUser ? <ProfilePage /> : <Navigate to='/signin' />} /> 
         <Route path='/*' element={<NotFoundPage />} />
       </Routes>
-    </>
+    </div>
   )
 }

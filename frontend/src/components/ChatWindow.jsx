@@ -24,8 +24,8 @@ export const ChatWindow = () => {
 
   if (!selectedConversation) {
     return (
-    <div>
-      Hãy chọn một cuộc hội thoại để tiếp tục
+    <div className={styles.textContainer}>
+      <p className={styles.text}>Hãy chọn một cuộc hội thoại để tiếp tục</p>
     </div>
     );
   }

@@ -1,6 +1,6 @@
 .row {
   display: flex;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
 }
 
 .other {
@@ -12,10 +12,11 @@
 }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   margin-right: 8px;
+  object-fit: cover;
 }
 
 .content {
@@ -26,19 +27,20 @@
 
 .bubble {
   background: #f3f4f6;
-  padding: 8px;
+  padding: 2px;
   border-radius: 14px;
 }
 
 .mine .bubble {
-  background: #2563eb;
+  background: #2a61da;
   color: white;
 }
 
 .image {
-  max-width: 240px;
+  max-width: 100%;
+  max-height: 320px;
+  object-fit: cover;
   border-radius: 10px;
-  margin-bottom: 6px;
 }
 
 .text {
@@ -47,9 +49,16 @@
   font-size: 14px;
 }
 
-.time {
+.rightTime {
   font-size: 11px;
   color: #6b7280;
   margin-top: 2px;
   align-self: flex-end;
+}
+
+.leftTime {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 0px;
+  align-self: flex-start;
 }
