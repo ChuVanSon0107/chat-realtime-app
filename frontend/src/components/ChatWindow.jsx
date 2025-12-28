@@ -14,6 +14,8 @@ export const ChatWindow = () => {
   const hasMore = useChatStore(state => state.hasMore);
   const cursor = useChatStore(state => state.cursor);
   const isLoadingMessages = useChatStore(state => state.isLoadingMessages);
+  const sendMessage = useChatStore(state => state.sendMessage);
+  const isSendingMessage = useChatStore(state => state.isSendingMessage);
 
   useEffect(() => {
     if (!selectedConversation) return;
@@ -44,7 +46,11 @@ export const ChatWindow = () => {
         conversation={selectedConversation}
         isLoadingMessages={isLoadingMessages}
       />
-      <ChatInput />
+      <ChatInput 
+        sendMessage={sendMessage} 
+        conversation={selectedConversation}
+        isSendingMessage={isSendingMessage}
+      />
     </div>
   )
 }

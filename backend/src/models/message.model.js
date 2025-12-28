@@ -1,6 +1,5 @@
 import sql from 'mssql';
 import { getConnection } from '../lib/database.js';
-import { getMessages } from '../controllers/message.controller.js';
 
 export const Message = {
   async create({ conversationId, senderId, content, image }) {
@@ -10,7 +9,7 @@ export const Message = {
       .input('conversationId', sql.BigInt, conversationId)
       .input('senderId', sql.BigInt, senderId)
       .input('content', sql.NVarChar(sql.MAX), content)
-      .input('image', sql.NVarChar(1000), image)
+      .input('image', sql.VarChar(sql.MAX), image)
       .query(`
         INSERT INTO Message (conversationId, senderId, content, image)
         VALUES (@conversationId, @senderId, @content, @image);

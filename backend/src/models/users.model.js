@@ -57,7 +57,7 @@ export const Users = {
     const result = await connection
       .request()
       .input("id", sql.BigInt, id)
-      .input("profilePic", sql.NVarChar(1000), profilePic)
+      .input("profilePic", sql.VarChar(sql.MAX), profilePic)
       .query(`UPDATE Users
               SET profilePic = @profilePic
               WHERE id = @id;
