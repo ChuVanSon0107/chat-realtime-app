@@ -13,7 +13,6 @@ export const ChatSideBar = () => {
   const fetchConversations = useChatStore(state => state.fetchConversations);
   const createConversation = useChatStore(state => state.createConversation);
 
-
   useEffect(() => {
     fetchConversations();
   }, []);

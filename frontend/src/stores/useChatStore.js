@@ -49,20 +49,26 @@ export const useChatStore = create ((set, get) => ({
   },
 
   // Chọn cuộc hội thoại
-  selectConversation: (conversation) => {
-    set({ selectedConversation: conversation });
+  selectConversation: async (conversation) => {
+    set({ 
+      selectedConversation: conversation,
+      messages: [],
+      cursor: null,
+      hasMore: true
+    });
   },
 
   // Lấy danh sách tin nhắn
   fetchMessages: async (conversationId, cursor) => {
     set({ isLoadingMessages: true });
     try { 
-      const res = await axiosInstance.get(`/messages/${conversationId}`,  { params: { cursor, limit: 50 } });
+      const res = await axiosInstance.get(`/messages/${conversationId}`,  { params: { cursor, limit: 20 } });
       set((state) => ({
         messages: [...res.data.messages, ...state.messages],
         cursor: res.data.nextCursor,
         hasMore: res.data.hasMore
       }));
+
       toast.success("Lấy danh sách tin nhắn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong fetchMessages:", error);
