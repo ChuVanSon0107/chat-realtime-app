@@ -1,9 +1,10 @@
 import styles from "./ConversationItem.module.css";
 import { useChatStore } from "../stores/useChatStore.js";
 
-export const ConversationItem = ({ conversation, authUser, fetchMessages, cursor }) => {
+export const ConversationItem = ({ conversation, authUser}) => { 
   const { members, lastMessage, type, name } = conversation;
   const selectConversation = useChatStore(state => state.selectConversation);
+  const selectedConversation = useChatStore(state => state.selectedConversation);
 
   // Chat cá nhân => lấy người còn lại
   const friend =
@@ -17,11 +18,12 @@ export const ConversationItem = ({ conversation, authUser, fetchMessages, cursor
       : "/images/avatar.png";
 
   const displayName = (type === "personal") ? friend?.fullName : name;
-
   const lastText = lastMessage ? lastMessage.content || "📷 Ảnh" : "Chưa có tin nhắn";
 
   const handleClick = async () => {
-    await selectConversation(conversation);
+    if (!selectedConversation || conversation.id !== selectedConversation.id) {
+      await selectConversation(conversation);
+    }
   }
 
   return (

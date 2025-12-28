@@ -11,8 +11,9 @@ export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor
     const element = containerRef.current;
     if (element) {
       element.scrollTop = element.scrollHeight;
+      console.log(element.scrollTop);
     }
-  }, []);
+  }, [messages]);
 
   const handleScroll = async () => {
     const element = containerRef.current;
@@ -34,7 +35,7 @@ export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor
     return <div className={styles.empty}>Chưa có tin nhắn nào</div>;
   }
 
-  if (isLoadingMessages) {
+  if (isLoadingMessages && hasMore) {
     return <div className={styles.loading}>Đang tải tin nhắn...</div>
   }
 

@@ -90,5 +90,7 @@ export const useChatStore = create ((set, get) => ({
     } finally {
       set({ isSendingMessage: false });
     }
-  }
+  },
+
+  
 }));
