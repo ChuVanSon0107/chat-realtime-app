@@ -50,14 +50,14 @@
 }
 
 .rightTime {
-  font-size: 11px;
+  font-size: 12px;
   color: #6b7280;
   margin-top: 2px;
   align-self: flex-end;
 }
 
 .leftTime {
-  font-size: 11px;
+  font-size: 12px;
   color: #6b7280;
   margin-top: 0px;
   align-self: flex-start;

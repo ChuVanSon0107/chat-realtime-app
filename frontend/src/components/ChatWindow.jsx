@@ -1,27 +1,9 @@
 import styles from './ChatWindow.module.css';
-import { useChatStore } from '../stores/useChatStore';
 import { ChatHeader } from './ChatHeader';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
-import { useAuthStore } from '../stores/useAuthStore';
-import { useEffect } from 'react';
 
-export const ChatWindow = () => {
-  const selectedConversation = useChatStore(state => state.selectedConversation);
-  const authUser = useAuthStore(state => state.authUser);
-  const messages = useChatStore(state => state.messages);
-  const fetchMessages = useChatStore(state => state.fetchMessages);
-  const hasMore = useChatStore(state => state.hasMore);
-  const cursor = useChatStore(state => state.cursor);
-  const isLoadingMessages = useChatStore(state => state.isLoadingMessages);
-  const sendMessage = useChatStore(state => state.sendMessage);
-  const isSendingMessage = useChatStore(state => state.isSendingMessage);
-
-  useEffect(() => {
-    if (!selectedConversation) return;
-    fetchMessages(selectedConversation.id, null);
-  }, [selectedConversation, fetchMessages]);
-
+export const ChatWindow = ({ authUser, messages, selectedConversation, selectConversation, hasMore, cursor, isSendingMessage, sendMessage, isLoadingMessages, fetchMessages }) => {
   if (!selectedConversation) {
     return (
     <div className={styles.textContainer}>
@@ -36,6 +18,7 @@ export const ChatWindow = () => {
       <ChatHeader 
         conversation={selectedConversation} 
         authUser={authUser} 
+        selectConversation={selectConversation}
       />
       <MessageList 
         messages={messages} 

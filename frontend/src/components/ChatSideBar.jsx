@@ -1,22 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useChatStore } from '../stores/useChatStore.js';
-import { useAuthStore } from '../stores/useAuthStore.js';
+import { useState } from 'react';
 import { ConversationItem } from './ConversationItem.jsx';
 import styles from './ChatSideBar.module.css';
 import { Section } from './Section.jsx';
 
-export const ChatSideBar = () => {
-  const authUser = useAuthStore(state => state.authUser);
-  const isLoadingConversations = useChatStore(state => state.isLoadingConversations);
-  const isCreatingConversation = useChatStore(state => state.isCreatingConversation);
-  const conversations = useChatStore(state => state.conversations);
-  const fetchConversations = useChatStore(state => state.fetchConversations);
-  const createConversation = useChatStore(state => state.createConversation);
-
-  useEffect(() => {
-    fetchConversations();
-  }, []);
-
+export const ChatSideBar = ({ authUser, conversations, selectConversation, selectedConversation, fetchMessages, cursor, setShowPersonalModal,setShowGroupModal }) => {
   const [showGroupChat, setShowGroupChat] = useState(false);
   const [showPersonalChat, setShowPersonalChat] = useState(false);
 
@@ -30,12 +17,17 @@ export const ChatSideBar = () => {
         title="Chat cá nhân"
         open={showPersonalChat}
         toggle={() => setShowPersonalChat(!showPersonalChat)}
+        onCreate={() => setShowPersonalModal(true)}
       >
         {personalConversations.map(c => (
           <ConversationItem
             key={c.id}
             conversation={c}
             authUser={authUser}
+            selectConversation={selectConversation}
+            selectedConversation={selectedConversation}
+            fetchMessages={fetchMessages}
+            cursor={cursor}
           />
         ))}
       </Section>
@@ -45,12 +37,17 @@ export const ChatSideBar = () => {
         title="Chat nhóm"
         open={showGroupChat}
         toggle={() => setShowGroupChat(!showGroupChat)}
+        onCreate={() => setShowGroupModal(true)}
       >
         {groupConversations.map(c => (
           <ConversationItem
             key={c.id}
             conversation={c}
             authUser={authUser}
+            selectConversation={selectConversation}
+            selectedConversation={selectedConversation}
+            fetchMessages={fetchMessages}
+            cursor={cursor}
           />
         ))}
       </Section>

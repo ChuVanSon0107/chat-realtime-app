@@ -1,43 +1,64 @@
 .header {
-  width: 100%;
-  height: 64px;
+  height: 60px;
   padding: 0 16px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #fff;
 
-  flex-shrink: 0;
-  border-bottom: 1px solid lightgray
+  background-color: #ffffff;
+  border-bottom: 1px solid lightgray;
+
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-.left {
+.header > div {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .avatar {
-  width: 40px;
-  height: 40px;
+  width: 55px;
+  height: 55px;
   border-radius: 50%;
   object-fit: cover;
+  flex-shrink: 0;
 }
 
 .title {
-  font-size: 16px;
-  font-weight: 600;
-  color: #111827;
+  font-size: 20px;
+  font-weight: 500;
+  color: black;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }
 
 .closeButton {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
   border: none;
-  background: transparent;
-  font-size: 20px;
+  background-color: transparent;
+
+  font-size: 18px;
+  line-height: 1;
+  color: #374151;
+
   cursor: pointer;
-  color: #6b7280;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .closeButton:hover {
-  color: #111827;
+  background-color: #f3f4f6;
 }
+

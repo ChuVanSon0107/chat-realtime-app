@@ -12,3 +12,14 @@
   color: #6b7280;
   margin-bottom: 8px;
 }
+
+.emptyContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.empty {
+  font-size: 20px;
+  color: gray;
+}

@@ -1,9 +1,6 @@
 import styles from './ChatHeader.module.css';
-import { useChatStore } from '../stores/useChatStore.js';
 
-export const ChatHeader = ({ conversation, authUser }) => {
-  const selectConversation = useChatStore(state => state.selectConversation);
-
+export const ChatHeader = ({ conversation, authUser, selectConversation }) => {
   if (!conversation) {
     return null;
   }
@@ -23,7 +20,7 @@ export const ChatHeader = ({ conversation, authUser }) => {
     <div className={styles.header}>
       <div>
         <img src={avatar} className={styles.avatar} />
-        <span className={styles.titel}>{title}</span>
+        <span className={styles.title}>{title}</span>
       </div>
       <button className={styles.closeButton} 
         onClick={() => {

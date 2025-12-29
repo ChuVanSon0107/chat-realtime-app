@@ -11,7 +11,6 @@ export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor
     const element = containerRef.current;
     if (element) {
       element.scrollTop = element.scrollHeight;
-      console.log(element.scrollTop);
     }
   }, [messages]);
 
@@ -27,17 +26,21 @@ export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor
       requestAnimationFrame(() => {
         element.scrollTop = element.scrollHeight - oldHeight;
       });
-      console.log("Infinite scroll");
     }
   }
 
   if (!messages || messages.length === 0) {
-    return <div className={styles.empty}>Chưa có tin nhắn nào</div>;
-  }
-
-  if (isLoadingMessages && hasMore) {
-    return <div className={styles.loading}>Đang tải tin nhắn...</div>
-  }
+    return (
+      <div 
+        ref={containerRef}
+        onScroll={handleScroll}
+        className={styles.container}
+      >
+        <div className={styles.emptyContainer}>
+          <div className={styles.empty}>Chưa có tin nhắn nào</div>
+        </div>
+      </div>);
+  } 
 
   return (
     <div 

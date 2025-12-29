@@ -1,4 +1,5 @@
 .friendsWrapper {
+  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -11,6 +12,8 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+
+  flex-shrink: 0;
 }
 
 .title {
@@ -20,6 +23,10 @@
 }
 
 .friendList {
+  flex: 1;
+  overflow-y: auto;
+  padding-bottom: 60px;
+
   display: flex;
   flex-direction: column;
   gap: 12px;

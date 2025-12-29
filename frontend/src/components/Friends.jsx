@@ -1,11 +1,7 @@
 import { useEffect } from 'react';
-import { useFriendStore } from '../stores/useFriendStore.js';
 import styles from './Friends.module.css';
 
-export const Friends = () => {
-  const friends = useFriendStore(state => state.friends);
-  const fetchFriends = useFriendStore(state => state.fetchFriends);
-  const isLoadingFriends = useFriendStore(state => state.isLoadingFriends);
+export const Friends = ({ friends, fetchFriends, isLoadingFriends }) => {
 
   useEffect(() => {
     fetchFriends();
@@ -13,6 +9,19 @@ export const Friends = () => {
 
   if (isLoadingFriends) {
     return <div className={styles.loading}>Đang tải...</div>
+  }
+
+  if (!friends.length) {
+    return (
+      <div className={styles.friendsWrapper}>
+        <div className={styles.titleContainer}>
+          <h3 className={styles.title}>Danh sách bạn bè</h3>
+        </div>
+        <div className={styles.empty}>
+          Không có bạn  bè nào
+        </div>
+      </div>
+    );
   }
 
   return (

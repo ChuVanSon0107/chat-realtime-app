@@ -35,7 +35,7 @@ export const useChatStore = create ((set, get) => ({
 
   // Tạo cuộc hội thoại
   createConversation: async (name, type, memberIds) => {
-    set({ isCreatingConversation: false });
+    set({ isCreatingConversation: true });
     try {
       await axiosInstance.post('/conversations', { name, type, memberIds });
       toast.success("Tạo cuộc hội thoại thành công");
@@ -43,8 +43,7 @@ export const useChatStore = create ((set, get) => ({
       console.error("❌ Lỗi trong createConversation:", error);
       toast.error(error.response.data.message);
     } finally {
-      set({ isCreatingConversation: true });
-      await get().fetchConversations();
+      set({ isCreatingConversation: false });
     }
   },
 
@@ -92,5 +91,4 @@ export const useChatStore = create ((set, get) => ({
     }
   },
 
-  
 }));

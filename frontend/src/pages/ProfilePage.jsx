@@ -7,8 +7,22 @@ import { Friends } from '../components/Friends.jsx';
 import { FriendRequests } from '../components/FriendRequests.jsx';
 import { FriendSearch } from '../components/FriendSearch.jsx';
 import { FriendTabs } from '../components/FriendTabs.jsx';
+import { useFriendStore } from '../stores/useFriendStore.js';
 
 export const ProfilePage = () => {
+  const friends = useFriendStore(state => state.friends);
+  const fetchFriends = useFriendStore(state => state.fetchFriends);
+  const isLoadingFriends = useFriendStore(state => state.isLoadingFriends);
+  const friendRequests = useFriendStore(state => state.friendRequests);
+  const fetchFriendRequests = useFriendStore(state => state.fetchFriendRequests);
+  const acceptFriendRequest = useFriendStore(state => state.acceptFriendRequest);
+  const declineFriendRequest = useFriendStore(state => state.declineFriendRequest);
+  const searchResults = useFriendStore(state => state.searchResults);
+  const searchUsers = useFriendStore(state => state.searchUsers);
+  const isSearching = useFriendStore(state => state.isSearching);
+  const sendFriendRequest = useFriendStore(state => state.sendFriendRequest);
+  const isSendingFriendRequest = useFriendStore(state => state.isSendingFriendRequest);
+
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
   const [selectedImage, setSelectedImage] = useState(null);
 
@@ -34,11 +48,30 @@ export const ProfilePage = () => {
   const renderContent = () => {
     switch(activeTab) {
       case "friends":
-        return <Friends />;
+        return (
+        <Friends 
+          friends={friends}
+          fetchFriends={fetchFriends}
+          isLoadingFriends={isLoadingFriends}
+        />);
       case "requests":
-        return <FriendRequests />;
+        return (
+        <FriendRequests
+          friendRequests={friendRequests}
+          fetchFriendRequests={fetchFriendRequests}
+          acceptFriendRequest={acceptFriendRequest}
+          declineFriendRequest={declineFriendRequest}
+        />);
       case "search":
-        return <FriendSearch />;
+        return (
+        <FriendSearch
+          authUser={authUser}
+          searchResults={searchResults}
+          isSearching={isSearching}
+          searchUsers={searchUsers}
+          isSendingFriendRequest={isSendingFriendRequest}
+          sendFriendRequest={sendFriendRequest}
+        />);
       default:
         return null;
     }
@@ -93,7 +126,7 @@ export const ProfilePage = () => {
 
           <div className={styles.rightSection}>
             <FriendTabs activeTab={activeTab} setActiveTab={setActiveTab} />
-            <div>
+            <div className={styles.contentWrapper}>
               { renderContent() }
             </div>
           </div>

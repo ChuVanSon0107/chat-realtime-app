@@ -1,21 +1,68 @@
 .section {
   margin-bottom: 8px;
   font-size: 20px;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .sectionHeader {
-  padding: 10px 14px;
-  font-weight: 600;
   display: flex;
-  justify-content: space-between;
-  cursor: pointer;
-  background: #f3f4f6;
+  align-items: center;
+  gap: 6px;
 
-  border: 1px solid lightgray;
+  padding: 8px 12px;
+  font-weight: 600;
+  cursor: pointer;
+
+  background: #f3f4f6;
+  border-radius: 6px;
+
+  transition: background 0.15s ease;
 }
 
 .sectionHeader:hover {
-  background: #e5e7eb;
+  background: #cfcfd0;
+}
+
+
+.arrow {
+  font-size: 20px;
+  color: black;
+  width: 16px;
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.title {
+  flex: 1;
+  color: black;
+}
+
+.actions {
+  position: relative;
+}
+
+.createButton {
+  width: 28px;
+  height: 28px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+
+  color: #374151;
+  transition: background 0.15s ease, opacity 0.15s ease;
+}
+
+.createButton:hover {
+  background: #dbeafe;
+  color: #2563eb;
 }
 
 .list {

@@ -1,13 +1,7 @@
 import { useEffect } from 'react';
-import { useFriendStore } from '../stores/useFriendStore.js';
 import styles from './FriendRequests.module.css';
 
-export const FriendRequests = () => {
-  const friendRequests = useFriendStore(state => state.friendRequests);
-  const fetchFriendRequests = useFriendStore(state => state.fetchFriendRequests);
-  const acceptFriendRequest = useFriendStore(state => state.acceptFriendRequest);
-  const declineFriendRequest = useFriendStore(state => state.declineFriendRequest);
-
+export const FriendRequests = ({ friendRequests, fetchFriendRequests, acceptFriendRequest, declineFriendRequest }) => {
   useEffect(() => {
     fetchFriendRequests();
   }, [fetchFriendRequests]);
@@ -15,7 +9,9 @@ export const FriendRequests = () => {
   if (!friendRequests.length) {
     return (
       <div className={styles.requestWrapper}>
-        <h3 className={styles.title}>Lời mời kết bạn</h3>
+        <div className={styles.titleContainer}>
+          <h3 className={styles.title}>Lời mời kết bạn</h3>
+        </div>
         <div className={styles.empty}>
           Không có lời mời kết bạn nào
         </div>

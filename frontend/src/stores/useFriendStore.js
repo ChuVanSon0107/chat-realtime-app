@@ -54,10 +54,7 @@ export const useFriendStore = create((set, get) => ({
     } catch (error) {
       console.error("❌ Lỗi trong acceptFriendRequest:", error);
       toast.error(error.response.data.message);
-    } finally {
-      await get().fetchFriends();
-      await get().fetchFriendRequests();
-    }
+    } 
   },
 
   // Từ chối lời mời kết bạn
@@ -68,10 +65,7 @@ export const useFriendStore = create((set, get) => ({
     } catch (error) {
       console.error("❌ Lỗi trong declineFriendRequest:", error);
       toast.error(error.response.data.message);
-    } finally {
-      await get().fetchFriendRequests();
-      console.log("decline", requestId);
-    }
+    } 
   },
 
   // Tìm kiếm bạn bè
@@ -105,7 +99,6 @@ export const useFriendStore = create((set, get) => ({
       toast.error(error.response.data.message);
     } finally { 
       set({ isSendingFriendRequest: false });
-      await get().fetchFriendRequests();
     }
   },
 

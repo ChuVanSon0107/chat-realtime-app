@@ -1,16 +1,7 @@
 import { useState } from 'react';
 import styles from './FriendSearch.module.css';
-import { useFriendStore } from '../stores/useFriendStore.js';
-import { useAuthStore } from '../stores/useAuthStore.js';
 
-export const FriendSearch = () => {
-  const authUser = useAuthStore(state => state.authUser);
-  const searchResults = useFriendStore(state => state.searchResults);
-  const searchUsers = useFriendStore(state => state.searchUsers);
-  const isSearching = useFriendStore(state => state.isSearching);
-  const sendFriendRequest = useFriendStore(state => state.sendFriendRequest);
-  const isSendingFriendRequest = useFriendStore(state => state.isSendingFriendRequest);
-
+export const FriendSearch = ({ authUser, searchResults, searchUsers, isSearching, sendFriendRequest, isSendingFriendRequest }) => {
   const [keyword, setKeyword] = useState("");
   const [message, setMessage] = useState(`Mình tên là ${authUser.fullName}. Mình làm quen nha. `)
 

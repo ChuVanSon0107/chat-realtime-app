@@ -1,10 +1,7 @@
 import styles from "./ConversationItem.module.css";
-import { useChatStore } from "../stores/useChatStore.js";
 
-export const ConversationItem = ({ conversation, authUser}) => { 
+export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation, fetchMessages, cursor }) => { 
   const { members, lastMessage, type, name } = conversation;
-  const selectConversation = useChatStore(state => state.selectConversation);
-  const selectedConversation = useChatStore(state => state.selectedConversation);
 
   // Chat cá nhân => lấy người còn lại
   const friend =
@@ -20,16 +17,16 @@ export const ConversationItem = ({ conversation, authUser}) => {
   const displayName = (type === "personal") ? friend?.fullName : name;
 
   let lastText;
-  if (Number(lastMessage.senderId) === Number(authUser.id)) {
+  if (Number(lastMessage?.senderId) === Number(authUser.id)) {
     lastText = lastMessage ? lastMessage.content || "Bạn: đã gửi ảnh" : "Chưa có tin nhắn";
   } else {
     lastText = lastMessage ? lastMessage.content || `${friend?.fullName}: đã gửi ảnh` : "Chưa có tin nhắn";
   }
 
-
   const handleClick = async () => {
     if (!selectedConversation || conversation.id !== selectedConversation.id) {
       await selectConversation(conversation);
+      await fetchMessages(conversation.id, cursor);
     }
   }
 
