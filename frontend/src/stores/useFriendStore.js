@@ -10,6 +10,7 @@ export const useFriendStore = create((set, get) => ({
   isLoadingFriends: false,
   isLoadingFriendRequests: false,
   isSearching: false,
+  isSendingFriendRequest: false,
 
   // Lấy danh sách bạn bè
   fetchFriends: async () => {
@@ -95,6 +96,7 @@ export const useFriendStore = create((set, get) => ({
 
   // Gửi lời mời kết bạn
   sendFriendRequest: async (receiverId, message) => {
+    set({ isSendingFriendRequest: true });
     try {
       await axiosInstance.post('/friend-requests', { receiverId, message });
       toast.success("Gửi lời mời kết bạn thành công thành công");
@@ -102,6 +104,7 @@ export const useFriendStore = create((set, get) => ({
       console.error("❌ Lỗi trong sendFriendRequest", error);
       toast.error(error.response.data.message);
     } finally { 
+      set({ isSendingFriendRequest: false });
       await get().fetchFriendRequests();
     }
   },

@@ -1,18 +1,31 @@
-import React from 'react'
+import styles from "./FriendTabs.module.css";
 
 export const FriendTabs = ({ activeTab, setActiveTab }) => {
-
   return (
-    <div>
-      <button onClick={() => setActiveTab("friends")}>
+    <div className={styles.tabs}>
+      <button
+        className={`${styles.tab} ${activeTab === "friends" ? styles.active : ""}`}
+        onClick={() => setActiveTab("friends")}
+        type="button"
+      >
         Bạn bè
       </button>
-      <button onClick={() => setActiveTab("requests")}>
+
+      <button
+        className={`${styles.tab} ${activeTab === "requests" ? styles.active : ""}`}
+        onClick={() => setActiveTab("requests")}
+        type="button"
+      >
         Lời mời kết bạn
       </button>
-      <button onClick={() => setActiveTab("search")}>
+
+      <button
+        className={`${styles.tab} ${activeTab === "search" ? styles.active : ""}`}
+        onClick={() => setActiveTab("search")}
+        type="button"
+      >
         Tìm kiếm bạn bè
       </button>
     </div>
-  )
-}
+  );
+};

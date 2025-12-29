@@ -1,0 +1,145 @@
+.searchWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #111827;
+}
+
+.searchBox {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+
+  width: 70%;
+  min-width: 400px;
+
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px ;
+  border: 1px solid lightblue;
+  font-size: 14px;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.searchButton {
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.searchButton:hover {
+  background-color: #1d4ed8;
+}
+
+.resultList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  width: 70%;
+  min-width: 400px;
+}
+
+.resultItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+
+  padding: 14px 16px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid lightgray;
+}
+
+.resultItem:hover {
+  background-color: lightgray;
+}
+
+.avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.name {
+  font-size: 20px;
+  font-weight: 600;
+  color: black;
+}
+
+.messageInput {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid #e5e7eb;
+  font-size: 14px;
+
+  border-color: lightblue;
+}
+
+.messageInput:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+}
+
+.addButton {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.addButton:hover {
+  background-color: #0051ff;
+}
+
+.empty {
+  text-align: center;
+  padding: 32px 0;
+  font-size: 20px;
+  color: #6b7280;
+}

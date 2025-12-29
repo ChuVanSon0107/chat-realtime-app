@@ -12,21 +12,48 @@ export const FriendRequests = () => {
     fetchFriendRequests();
   }, [fetchFriendRequests]);
 
-  console.log(friendRequests);
+  if (!friendRequests.length) {
+    return (
+      <div className={styles.requestWrapper}>
+        <h3 className={styles.title}>Lời mời kết bạn</h3>
+        <div className={styles.empty}>
+          Không có lời mời kết bạn nào
+        </div>
+      </div>
+    );
+  }
 
   return (
-    <div>
-      <h3>Lời mời kết bạn</h3>
+    <div className={styles.requestWrapper}>
+      <div className={styles.titleContainer}>
+        <h3 className={styles.title}>Lời mời kết bạn</h3>
+      </div>
 
-      <div>
+      <div className={styles.requestList}>
         { friendRequests.map((friendRequest) => (
-        <div key={friendRequest.requestId}>
-          <div>
-            <img src={friendRequest.profilePic ? friendRequest.profilePic : "/images/avatar.png" }/>
+        <div key={friendRequest.requestId} className={styles.requestItem}>
+          <img 
+            src={friendRequest.profilePic || "/images/avatar.png" }
+            className={styles.avatar}
+          />
+
+          <div className={styles.info}>
+            <div className={styles.name}>{friendRequest.fullName}</div>
+            { friendRequest.message && (
+              <div className={styles.message}>{friendRequest.message}</div>
+            ) }
           </div>
-          <div>{friendRequest.fullName}</div>
-          <button onClick={() => acceptFriendRequest(friendRequest.requestId)}>Chấp nhận</button>
-          <button onClick={() => declineFriendRequest(friendRequest.requestId)}>Từ chối</button>
+
+          <div className={styles.actions}>
+            <button 
+              onClick={() => acceptFriendRequest(friendRequest.requestId)}
+              className={styles.acceptButton}
+            >Chấp nhận</button>
+            <button 
+              onClick={() => declineFriendRequest(friendRequest.requestId)}
+              className={styles.declineButton}
+            >Từ chối</button>
+          </div>
         </div>
         )) }
       </div>

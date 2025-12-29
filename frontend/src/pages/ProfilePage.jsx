@@ -49,9 +49,6 @@ export const ProfilePage = () => {
       <NavBar />
       
       <div className={styles.profilePage}>
-        <div className={styles.header}>
-          Thông tin cá nhân
-        </div>
         <div className={styles.profilePageBody}>
           {/* Left section */}
           <div className={styles.leftSection}>
