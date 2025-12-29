@@ -1,8 +1,8 @@
-import styles from './CreateGroupConversationModal.module.css'
+import styles from './GroupConversationModal.module.css'
 import { X } from 'lucide-react';
 import { useState } from 'react';
 
-export const CreateGroupConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
+export const GroupConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
   const type = "group";
   const [groupName, setGroupName] = useState("");
   const [memberIds, setMemberIds] = useState([]);

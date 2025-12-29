@@ -6,8 +6,8 @@ import { useAuthStore } from "../stores/useAuthStore.js";
 import { useChatStore } from "../stores/useChatStore.js";
 import { useFriendStore } from "../stores/useFriendStore.js";
 import styles from './ChatPage.module.css';
-import { CreatePersonalConversationModal } from "../components/CreatePersonalConversationModal.jsx";
-import { CreateGroupConversationModal } from "../components/CreateGroupConversationModal.jsx";
+import { PersonalConversationModal } from "../components/PersonalConversationModal.jsx";
+import { GroupConversationModal } from "../components/GroupConversationModal.jsx";
 
 export const ChatPage = () => {
   const authUser = useAuthStore(state => state.authUser);
@@ -63,7 +63,7 @@ export const ChatPage = () => {
       </div>
 
       { showPersonalModal && (
-        <CreatePersonalConversationModal 
+        <PersonalConversationModal 
           friends={friends}
           createConversation={createConversation}
           onClose={() => setShowPersonalModal(false)}
@@ -73,7 +73,7 @@ export const ChatPage = () => {
 
       {
         showGroupModal && ( 
-        <CreateGroupConversationModal
+        <GroupConversationModal
           friends={friends}
           createConversation={createConversation}
           onClose={() => setShowGroupModal(false)}

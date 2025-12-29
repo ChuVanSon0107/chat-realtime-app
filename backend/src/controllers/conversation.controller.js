@@ -54,7 +54,7 @@ export const createConversation = async (req, res) => {
         [user1Id, user2Id] = [user2Id, user1Id];
       }
 
-      let alreadyConversation = await Conversation.findPersonalConversation({ user1Id, user2Id });
+      const alreadyConversation = await Conversation.findPersonalConversation({ user1Id, user2Id });
 
       if (alreadyConversation) {
         return res.status(200).json({ message: "Bạn đã nhắn tin với người đó trước rồi", conversationId: alreadyConversation });

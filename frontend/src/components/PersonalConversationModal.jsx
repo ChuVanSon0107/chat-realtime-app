@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import styles from './CreatePersonalConversationModal.module.css';
+import styles from './PersonalConversationModal.module.css';
 
-export const CreatePersonalConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
+export const PersonalConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
   const type = "personal";
   const name = "";
   const [selectedId, setSelectedId] = useState();
