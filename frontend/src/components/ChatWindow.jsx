@@ -3,7 +3,7 @@ import { ChatHeader } from './ChatHeader';
 import { MessageList } from './MessageList';
 import { ChatInput } from './ChatInput';
 
-export const ChatWindow = ({ authUser, messages, selectedConversation, selectConversation, hasMore, cursor, isSendingMessage, sendMessage, isLoadingMessages, fetchMessages }) => {
+export const ChatWindow = ({ authUser, messages, selectedConversation, selectConversation, isSendingMessage, sendMessage, isLoadingMessages, fetchMessages, hasMore }) => {
   if (!selectedConversation) {
     return (
     <div className={styles.textContainer}>
@@ -24,14 +24,11 @@ export const ChatWindow = ({ authUser, messages, selectedConversation, selectCon
         messages={messages} 
         authUser={authUser} 
         fetchMessages={fetchMessages}  
-        hasMore={hasMore}
-        cursor={cursor}
-        conversation={selectedConversation}
         isLoadingMessages={isLoadingMessages}
+        hasMore={hasMore}
       />
       <ChatInput 
         sendMessage={sendMessage} 
-        conversation={selectedConversation}
         isSendingMessage={isSendingMessage}
       />
     </div>

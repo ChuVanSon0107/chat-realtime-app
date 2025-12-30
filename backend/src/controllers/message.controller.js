@@ -23,7 +23,7 @@ export const sendMessage = async (req, res) => {
 
     const message = await Message.create({ conversationId, senderId: userId, content, image });
 
-    return res.status(200).json({ messageId: message.id });
+    return res.status(200).json(message);
   } catch (error) {
     console.error("❌ Lỗi trong sendMessage controller:", error);
     return  res.status(500).json({ message: "Lỗi server!" });
@@ -51,7 +51,7 @@ export const getMessages = async (req, res) => {
     if (!cursor) {
       messages = await Message.getMessagesFirst({ conversationId, limit });
     } else {
-       messages = await Message.getMessagesWithCursor({ conversationId, limit, cursor });
+      messages = await Message.getMessagesWithCursor({ conversationId, limit, cursor });
     }
 
     messages = messages.reverse();

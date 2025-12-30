@@ -84,7 +84,7 @@ export const Conversation = {
 
         -- Lấy last message
         (
-          SELECT TOP 1 M.id, M.content, M.image, M.senderId, M.createdAt
+          SELECT TOP 1 *
           FROM Message AS M
           WHERE M.conversationId = C.id
           ORDER BY M.createdAt DESC
@@ -103,6 +103,41 @@ export const Conversation = {
       members: c.members ? JSON.parse(c.members) : [],
       lastMessage: c.lastMessage ? JSON.parse(c.lastMessage) : null
     }));
+  },
+
+  async getNewConversation({ conversationId }) {
+    const connection = await getConnection();
+    const result = await connection
+      .request()
+      .input('conversationId', sql.BigInt, conversationId)
+      .query(`
+        SELECT C.id, type, name, 
+
+        -- Lấy members
+        (
+          SELECT U.id, fullName, profilePic
+          FROM Users AS U
+          JOIN ConversationMember AS CM1 ON CM1.userId = U.id
+          WHERE CM1.conversationId = @conversationId
+          FOR JSON PATH
+        ) AS members
+        
+        FROM Conversation AS C
+        JOIN ConversationMember AS CM
+        ON C.id = CM.conversationId
+        WHERE C.id = @conversationId
+        GROUP BY C.id, type, name;
+        `);
+
+    const conversation = result.recordset[0];
+    
+    if (!conversation) return null;
+
+    return {
+      ...conversation,
+      members: conversation.members ? JSON.parse(conversation.members) : [],
+      lastMessage: null,
+    };
   },
 
   async isMember({ conversationId, userId }) {

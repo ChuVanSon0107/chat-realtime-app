@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import styles from './MessageList.module.css';
 import { Message } from './Message.jsx';
 
-export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor, conversation, isLoadingMessages }) => {
+export const MessageList = ({ messages, authUser, fetchMessages, isLoadingMessages, hasMore }) => {
   // container
   const containerRef = useRef(null);
 
@@ -21,7 +21,7 @@ export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor
     if (element.scrollTop < 50) {
       const oldHeight = element.scrollHeight;
 
-      await fetchMessages(conversation.id, cursor);
+      await fetchMessages();
       
       requestAnimationFrame(() => {
         element.scrollTop = element.scrollHeight - oldHeight;
@@ -48,7 +48,7 @@ export const MessageList = ({ messages, authUser, fetchMessages, hasMore, cursor
       onScroll={handleScroll}
       className={styles.container}
     >
-      { hasMore && (
+      { isLoadingMessages && (
         <div className={styles.loading}>Đang tải...</div>
       ) }
 

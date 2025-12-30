@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styles from './ChatInput.module.css';
 import { Camera, Send } from 'lucide-react';
 
-export const ChatInput = ({ sendMessage, conversation, isSendingMessage }) => {
+export const ChatInput = ({ sendMessage, isSendingMessage }) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
@@ -33,7 +33,7 @@ export const ChatInput = ({ sendMessage, conversation, isSendingMessage }) => {
     if (isSendingMessage) return;
     if (!text.trim() && !image) return;
 
-    await sendMessage(conversation.id, text, image);
+    await sendMessage(text, image);
     setText("");
     setPreview(null);
     setImage(null);

@@ -10,7 +10,6 @@ export const createConversation = async (req, res) => {
       return res.status(400).json({ message: "Không có loại nhóm" });
     } 
 
-
     if (type === "group" && !name) {
       return res.status(400).json({ message: "Không có tên nhóm" });
     }
@@ -68,7 +67,9 @@ export const createConversation = async (req, res) => {
       await Conversation.insertConversationMember({ conversationId, userId, role: "member" });
       await Conversation.insertConversationMember({ conversationId, userId: memberIds[0], role: "member" });
 
-      return res.status(200).json({ message: "Bạn đã tạo thành công", conversationId });
+      // Lấy conversation vừa tạo
+      const newConversation = await Conversation.getNewConversation({ conversationId });
+      return res.status(200).json(newConversation);
     }
 
     // Nhắn tin nhóm
@@ -84,7 +85,9 @@ export const createConversation = async (req, res) => {
         await Conversation.insertConversationMember({ conversationId, userId: memberId, role: "member" });
       }
 
-      return res.status(200).json({ message: "Bạn đã tạo thành công", conversationId });
+      // Lấy conversation vừa tạo
+      const newConversation = await Conversation.getNewConversation({ conversationId });
+      return res.status(200).json(newConversation);
     }
 
   } catch (error) {

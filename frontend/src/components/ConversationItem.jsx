@@ -1,6 +1,6 @@
 import styles from "./ConversationItem.module.css";
 
-export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation, fetchMessages, cursor }) => { 
+export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation }) => { 
   const { members, lastMessage, type, name } = conversation;
 
   // Chat cá nhân => lấy người còn lại
@@ -16,22 +16,29 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
 
   const displayName = (type === "personal") ? friend?.fullName : name;
 
+  const senderId = lastMessage?.senderId;
+  const sender = members.find(m => Number(m.id) === Number(senderId));
   let lastText;
-  if (Number(lastMessage?.senderId) === Number(authUser.id)) {
-    lastText = lastMessage ? lastMessage.content || "Bạn: đã gửi ảnh" : "Chưa có tin nhắn";
+  if (!lastMessage) {
+    lastText = "Chưa có tin nhắn nào";
   } else {
-    lastText = lastMessage ? lastMessage.content || `${friend?.fullName}: đã gửi ảnh` : "Chưa có tin nhắn";
+    if (Number(senderId) === Number(authUser.id)) {
+      lastText = "Bạn: " + (lastMessage.content ||  "Gửi một ảnh");
+    } else {
+      lastText = `${sender.fullName}: ` + (lastMessage.content ||  "Gửi một ảnh");
+    }
   }
 
+  const isSelected = (selectedConversation?.id === conversation.id);
+
   const handleClick = async () => {
-    if (!selectedConversation || conversation.id !== selectedConversation.id) {
+    if (!isSelected) {
       await selectConversation(conversation);
-      await fetchMessages(conversation.id, cursor);
     }
   }
 
   return (
-    <div className={styles.item} onClick={handleClick}>
+    <div className={`${styles.item} ${isSelected ? styles.active : ""}`} onClick={handleClick}>
       <img src={avatar} className={styles.avatar} />
 
       <div className={styles.info}>

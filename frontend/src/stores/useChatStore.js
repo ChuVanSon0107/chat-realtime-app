@@ -37,7 +37,11 @@ export const useChatStore = create ((set, get) => ({
   createConversation: async (name, type, memberIds) => {
     set({ isCreatingConversation: true });
     try {
-      await axiosInstance.post('/conversations', { name, type, memberIds });
+      const res = await axiosInstance.post('/conversations', { name, type, memberIds });
+      set((state) => ({
+        conversations: [...state.conversations, res.data]
+      }));
+
       toast.success("Tạo cuộc hội thoại thành công");
     } catch (error) {
       console.error("❌ Lỗi trong createConversation:", error);
@@ -49,19 +53,39 @@ export const useChatStore = create ((set, get) => ({
 
   // Chọn cuộc hội thoại
   selectConversation: async (conversation) => {
-    set({ 
-      selectedConversation: conversation,
+    const { selectedConversation, resetMessages, fetchMessages } = get();
+
+    if (!conversation) {
+      set({ selectedConversation: conversation });
+      resetMessages();
+    } else {
+      if (selectedConversation?.id === conversation.id) return;
+      
+      set({ selectedConversation: conversation });
+      resetMessages();
+      await fetchMessages(conversation.id);
+    }
+  },
+
+  // reset
+  resetMessages: () => {
+    set({
       messages: [],
       cursor: null,
-      hasMore: true
+      hasMore: true,
+      isLoadingMessages: false,
+      isSendingMessage: false,
     });
   },
 
   // Lấy danh sách tin nhắn
-  fetchMessages: async (conversationId, cursor) => {
+  fetchMessages: async () => {
+    const { cursor, hasMore, isLoadingMessages, selectedConversation } = get();
+    if (isLoadingMessages || !hasMore) return;
+
     set({ isLoadingMessages: true });
     try { 
-      const res = await axiosInstance.get(`/messages/${conversationId}`,  { params: { cursor, limit: 20 } });
+      const res = await axiosInstance.get(`/messages/${selectedConversation?.id}`,  { params: { cursor, limit: 20 } });
       set((state) => ({
         messages: [...res.data.messages, ...state.messages],
         cursor: res.data.nextCursor,
@@ -78,10 +102,19 @@ export const useChatStore = create ((set, get) => ({
   },
 
   // Gửi tin nhắn
-  sendMessage: async (conversationId, content, image) => {
+  sendMessage: async (content, image) => {
+    const { selectedConversation } = get();
+    const conversationId = selectedConversation.id;
+
     set({ isSendingMessage: true });
     try {
-      await axiosInstance.post('messages', { conversationId, content, image });
+      const res = await axiosInstance.post('messages', { conversationId, content, image });
+      set(state => ({
+        messages: [...state.messages, res.data],
+        conversations: state.conversations.map((c) => 
+          c.id === conversationId ? { ...c, lastMessage: res.data} : c
+        )
+      }));
       toast.success("Đã gửi tin nhắn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong sendMessage:", error);

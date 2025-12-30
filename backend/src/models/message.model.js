@@ -14,7 +14,8 @@ export const Message = {
         INSERT INTO Message (conversationId, senderId, content, image)
         VALUES (@conversationId, @senderId, @content, @image);
 
-        SELECT SCOPE_IDENTITY() AS id;
+        DECLARE @newId BIGINT = SCOPE_IDENTITY()
+        SELECT * FROM Message WHERE id = @newId;
         `);
     
     return result.recordset[0];

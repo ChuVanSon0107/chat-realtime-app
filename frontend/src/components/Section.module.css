@@ -1,12 +1,6 @@
-.section {
-  margin-bottom: 8px;
+.sectionHeader {
   font-size: 20px;
 
-  display: flex;
-  flex-direction: column;
-}
-
-.sectionHeader {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -63,8 +57,4 @@
 .createButton:hover {
   background: #dbeafe;
   color: #2563eb;
-}
-
-.list {
-  padding: 4px 0;
 }

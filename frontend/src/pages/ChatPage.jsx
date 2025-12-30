@@ -16,8 +16,6 @@ export const ChatPage = () => {
   const selectedConversation = useChatStore(state => state.selectedConversation);
   const messages = useChatStore(state => state.messages);
   const fetchMessages = useChatStore(state => state.fetchMessages);
-  const hasMore = useChatStore(state => state.hasMore);
-  const cursor = useChatStore(state => state.cursor);
   const isLoadingMessages = useChatStore(state => state.isLoadingMessages);
   const sendMessage = useChatStore(state => state.sendMessage);
   const isSendingMessage = useChatStore(state => state.isSendingMessage);
@@ -26,6 +24,7 @@ export const ChatPage = () => {
   const fetchFriends = useFriendStore(state => state.fetchFriends)
   const createConversation = useChatStore(state =>  state.createConversation);
   const isCreatingConversation = useChatStore(state => state.isCreatingConversation);
+  const hasMore = useChatStore(state => state.hasMore)
 
   const [showPersonalModal, setShowPersonalModal] = useState(false);
   const [showGroupModal, setShowGroupModal] = useState(false);
@@ -44,7 +43,6 @@ export const ChatPage = () => {
           conversations={conversations}
           selectConversation={selectConversation}
           selectedConversation={selectedConversation}
-          fetchMessages={fetchMessages}
           setShowPersonalModal={setShowPersonalModal}
           setShowGroupModal={setShowGroupModal}
         />
@@ -53,12 +51,11 @@ export const ChatPage = () => {
           messages={messages}
           selectConversation={selectConversation}
           selectedConversation={selectedConversation}
-          hasMore={hasMore}
-          cursor={cursor}
           isSendingMessage={isSendingMessage}
           sendMessage={sendMessage}
           isLoadingMessages={isLoadingMessages}
           fetchMessages={fetchMessages}
+          hasMore={hasMore}
         />
       </div>
 
