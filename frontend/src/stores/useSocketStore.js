@@ -27,7 +27,13 @@ export const useSocketStore = create((set, get) => ({
     });
 
     socket.on("new-message", (message) => {
-      useChatStore.getState().update(message);
+      useChatStore.getState().updateMessage(message);
+    });
+
+    socket.on("new-conversation", (conversation) => {
+      useChatStore.getState().updateConversation(conversation);
+
+      socket.emit("join-conversation", conversation.id);
     });
   },
 

@@ -1,5 +1,6 @@
 import { Conversation } from "../models/conversation.model.js";
 import { Friendship } from "../models/friendship.model.js";
+import { io, onlineUsers } from '../lib/socket.js';
 
 export const createConversation = async (req, res) => {
   try {
@@ -69,6 +70,15 @@ export const createConversation = async (req, res) => {
 
       // Lấy conversation vừa tạo
       const newConversation = await Conversation.getNewConversation({ conversationId });
+
+      // socket.io => realtime
+      for (const memberId of [...memberIds, userId]) {
+        const socketId = onlineUsers.get(memberId);
+        if (socketId) {
+          io.to(socketId).emit("new-conversation", newConversation);
+        }
+      }
+
       return res.status(200).json(newConversation);
     }
 
@@ -87,6 +97,15 @@ export const createConversation = async (req, res) => {
 
       // Lấy conversation vừa tạo
       const newConversation = await Conversation.getNewConversation({ conversationId });
+
+      // socket.io => realtime
+      for (const memberId of [...memberIds, userId]) {
+        const socketId = onlineUsers.get(memberId);
+        if (socketId) {
+          io.to(socketId).emit("new-conversation", newConversation);
+        }
+      }
+
       return res.status(200).json(newConversation);
     }
 

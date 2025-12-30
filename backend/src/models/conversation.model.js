@@ -70,7 +70,7 @@ export const Conversation = {
       .request()
       .input('userId', sql.BigInt, userId)
       .query(`
-        SELECT C.id, type, name, 
+        SELECT C.id, type, name, creatorId,
 
         -- Lấy members
         (
@@ -94,7 +94,7 @@ export const Conversation = {
         JOIN ConversationMember AS CM
         ON C.id = CM.conversationId
         WHERE CM.userId = @userId
-        GROUP BY C.id, type, name;
+        GROUP BY C.id, type, name, creatorId;
         `);
 
     return result.recordset.map((c) => ({
@@ -124,7 +124,7 @@ export const Conversation = {
       .request()
       .input('conversationId', sql.BigInt, conversationId)
       .query(`
-        SELECT C.id, type, name, 
+        SELECT C.id, type, name, creatorId,
 
         -- Lấy members
         (
@@ -139,7 +139,7 @@ export const Conversation = {
         JOIN ConversationMember AS CM
         ON C.id = CM.conversationId
         WHERE C.id = @conversationId
-        GROUP BY C.id, type, name;
+        GROUP BY C.id, type, name, creatorId;
         `);
 
     const conversation = result.recordset[0];

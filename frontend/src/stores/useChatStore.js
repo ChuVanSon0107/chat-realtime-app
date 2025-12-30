@@ -125,28 +125,40 @@ export const useChatStore = create ((set, get) => ({
     }
   },
 
-  update: async (message) => {
+  updateMessage: async (message) => {
     try {
       const authUser = useAuthStore.getState().authUser;
       const selectedConversation = get().selectedConversation;
       
-      if (Number(authUser.id) !== Number(message.senderId)) {
-        set((state) => ({
-          conversations: state.conversations.map((c) => 
-            c.id === message.conversationId ? { ...c, lastMessage: message} : c
-          ),
-        }));
-      }
+      if (Number(message.senderId) === Number(authUser.id)) return;
+      
+      // cập nhật lastMessage
+      set((state) => ({
+        conversations: state.conversations.map((c) => 
+          c.id === message.conversationId ? { ...c, lastMessage: message} : c
+        ),
+      }));
 
-      if (Number(selectedConversation.id) === Number(message.conversationId)) {
-        set((state) => ({
-          messages: [...state.messages, message],
-        }));
-      }
+      if (Number(selectedConversation.id) !== Number(message.conversationId)) return;
+
+      // cập nhật tin nhắn
+      set((state) => ({
+        messages: [...state.messages, message],
+      }));
 
     } catch (error) {
-      console.error("❌ Lỗi trong update:", error);
+      console.error("❌ Lỗi trong updateMessage:", error);
       toast.error(error.response.data.message);
     }
   },
+
+  updateConversation: async (conversation) => {
+    const authUser = useAuthStore.getState().authUser;
+
+    if (Number(conversation.creatorId) === Number(authUser.id)) return;
+    
+    set((state) => ({
+      conversations: [...state.conversations, conversation]
+    }));
+  }
 }));

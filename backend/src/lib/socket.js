@@ -38,7 +38,11 @@ io.on("connection", async (socket) => {
     socket.join(conversationId.toString());
   });
 
-  console.log("📦 rooms of socket:", socket.rooms);
+  // join room cho tạo conversation realtime
+  socket.on("join-conversation", (conversationId) => {
+    socket.join(conversationId.toString());
+  })
+  
 
   // Lắng nghe ngắt kết nối
   socket.on("disconnect", () => {
@@ -48,5 +52,5 @@ io.on("connection", async (socket) => {
   });
 });
 
-export { io, app, server };
+export { io, app, server, onlineUsers };
 
