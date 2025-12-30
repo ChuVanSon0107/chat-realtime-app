@@ -15,7 +15,12 @@ export const Message = {
         VALUES (@conversationId, @senderId, @content, @image);
 
         DECLARE @newId BIGINT = SCOPE_IDENTITY()
-        SELECT * FROM Message WHERE id = @newId;
+        SELECT M.id, M.conversationId, M.senderId, U.fullName, U.profilePic,
+          M.content, M.image, M.createdAt
+        FROM Message AS M
+        JOIN Users AS U 
+        ON M.senderId = U.id
+        WHERE M.id = @newId;
         `);
     
     return result.recordset[0];

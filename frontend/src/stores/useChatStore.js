@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { axiosInstance } from '../lib/axios.js';
 import toast from 'react-hot-toast';
+import { useAuthStore } from './useAuthStore.js';
 
 export const useChatStore = create ((set, get) => ({
   // Conversation
@@ -124,4 +125,28 @@ export const useChatStore = create ((set, get) => ({
     }
   },
 
+  update: async (message) => {
+    try {
+      const authUser = useAuthStore.getState().authUser;
+      const selectedConversation = get().selectedConversation;
+      
+      if (Number(authUser.id) !== Number(message.senderId)) {
+        set((state) => ({
+          conversations: state.conversations.map((c) => 
+            c.id === message.conversationId ? { ...c, lastMessage: message} : c
+          ),
+        }));
+      }
+
+      if (Number(selectedConversation.id) === Number(message.conversationId)) {
+        set((state) => ({
+          messages: [...state.messages, message],
+        }));
+      }
+
+    } catch (error) {
+      console.error("❌ Lỗi trong update:", error);
+      toast.error(error.response.data.message);
+    }
+  },
 }));

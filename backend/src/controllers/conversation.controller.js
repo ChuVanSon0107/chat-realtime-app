@@ -108,5 +108,15 @@ export const getConversations = async (req, res) => {
   }
 };
 
+export const getUserConversationsForSocketIO = async (userId) => {
+  try {
+    const conversationIds = await Conversation.getConversationIds({ userId });
+    return conversationIds;
+  } catch (error) {
+    console.error("❌ Lỗi trong getUserConversationsForSocketIO controller: ", error);
+    return [];
+  }
+}
+
 
 

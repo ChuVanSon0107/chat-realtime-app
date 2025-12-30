@@ -9,11 +9,11 @@ import conversationRoutes from './routes/conversation.route.js';
 import messageRoutes from './routes/message.route.js';
 import cors from 'cors';
 import { checkToken } from "./middlewares/auth.middleware.js";
+import { app, server } from './lib/socket.js';
 
 // load các biến môi trường để sử dụng
 dotenv.config();
 
-const app = express();
 const PORT = process.env.PORT || 5000;
 
 // api để xác thực người dùng (đăng ký, đăng nhập, đăng xuất, kiểm tra người dùng)
@@ -24,7 +24,7 @@ app.use(cookieParser()); // Để đọc được cookie
 // Cho phép frontend gửi request cho server
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     credentials: true,
   })
 );
@@ -40,6 +40,6 @@ app.use("/api/users", userRoutes);
 app.use("/api/conversations", conversationRoutes);
 app.use("/api/messages", messageRoutes);
 
-app.listen(PORT, () => {  
+server.listen(PORT, () => {  
   console.log(`Server is running on port ${PORT}`);
 });   

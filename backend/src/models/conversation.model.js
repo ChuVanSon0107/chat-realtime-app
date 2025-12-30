@@ -1,6 +1,5 @@
 import sql from 'mssql';
 import { getConnection } from '../lib/database.js';
-
 export const Conversation = {
   async findPersonalConversation({ user1Id, user2Id }) {
     const connection = await getConnection();
@@ -103,6 +102,20 @@ export const Conversation = {
       members: c.members ? JSON.parse(c.members) : [],
       lastMessage: c.lastMessage ? JSON.parse(c.lastMessage) : null
     }));
+  },
+
+  async getConversationIds({ userId }) {
+    const connection = await getConnection();
+    const result = await connection
+      .request()
+      .input('userId', sql.BigInt, userId)
+      .query(`
+        SELECT conversationId
+        FROM ConversationMember
+        WHERE userId = @userId;
+        `);
+
+    return result.recordset.map(row => row.conversationId);
   },
 
   async getNewConversation({ conversationId }) {

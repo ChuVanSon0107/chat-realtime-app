@@ -1,5 +1,6 @@
 import { Conversation } from '../models/conversation.model.js';
 import { Message } from '../models/message.model.js';
+import { io } from '../lib/socket.js';
 
 export const sendMessage = async (req, res) => {
   try {
@@ -23,6 +24,8 @@ export const sendMessage = async (req, res) => {
 
     const message = await Message.create({ conversationId, senderId: userId, content, image });
 
+    // socket.io => realtime
+    io.to(conversationId.toString()).emit("new-message", message);
     return res.status(200).json(message);
   } catch (error) {
     console.error("❌ Lỗi trong sendMessage controller:", error);

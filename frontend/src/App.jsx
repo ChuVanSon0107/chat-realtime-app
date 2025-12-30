@@ -8,14 +8,24 @@ import { LoadingPage } from './pages/LoadingPage.jsx';
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./stores/useAuthStore.js";
 import { useEffect } from "react";
+import { useSocketStore } from "./stores/useSocketStore.js";
 
 export const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
+  const { connectSocket, disconnectSocket } = useSocketStore();
 
   // Kiểm tra truy cập khi reload lại page
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
+
+  useEffect(() => {
+    if (authUser) {
+      connectSocket();
+    }
+
+    return () => disconnectSocket();
+  }, [authUser, connectSocket, disconnectSocket])
 
   if (isCheckingAuth && !authUser) {
     return <LoadingPage />

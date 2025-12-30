@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { axiosInstance } from '../lib/axios.js';
 import toast from 'react-hot-toast';
+import { useSocketStore } from './useSocketStore.js';
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -76,5 +77,6 @@ export const useAuthStore = create((set, get) => ({
     } finally {
       set({ isUpdatingProfile: false });
     }
-  }
+  },
+
 }));
