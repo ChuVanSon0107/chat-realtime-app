@@ -16,7 +16,7 @@ export const Message = {
 
         DECLARE @newId BIGINT = SCOPE_IDENTITY()
         SELECT M.id, M.conversationId, M.senderId, U.fullName, U.profilePic,
-          M.content, M.image, M.createdAt
+          M.content, M.image, FORMAT(M.createdAt, 'yyyy-MM-ddTHH:mm:ss.fff') AS createdAt
         FROM Message AS M
         JOIN Users AS U 
         ON M.senderId = U.id
@@ -34,7 +34,7 @@ export const Message = {
       .input('limit', sql.Int, limit)
       .query(`
           SELECT TOP(@limit) M.id, M.conversationId, M.senderId, U.fullName, U.profilePic,
-            M.content, M.image, M.createdAt
+            M.content, M.image, FORMAT(M.createdAt, 'yyyy-MM-ddTHH:mm:ss.fff') AS createdAt
           FROM Message AS M
           JOIN Users AS U 
           ON M.senderId = U.id
@@ -54,7 +54,7 @@ export const Message = {
       .input('cursor', sql.BigInt, cursor)
       .query(`
           SELECT TOP(@limit) M.id , M.conversationId, M.senderId, U.fullName, U.profilePic,
-            M.content, M.image, M.createdAt
+            M.content, M.image, FORMAT(M.createdAt, 'yyyy-MM-ddTHH:mm:ss.fff') AS createdAt
           FROM Message AS M
           JOIN Users AS U 
           ON M.senderId = U.id

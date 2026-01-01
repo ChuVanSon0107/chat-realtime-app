@@ -1,11 +1,13 @@
 import styles from './GroupConversationModal.module.css'
 import { X } from 'lucide-react';
 import { useState } from 'react';
+import { Camera } from 'lucide-react';
 
 export const GroupConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
   const type = "group";
   const [groupName, setGroupName] = useState("");
   const [memberIds, setMemberIds] = useState([]);
+  const [selectedImage, setSelectedImage] = useState(null);
 
   const selectMember = (id) => {
     setMemberIds((prev) => (
@@ -18,10 +20,26 @@ export const GroupConversationModal = ({ friends, createConversation, onClose, i
       return;
     }
 
-    await  createConversation(groupName, type, memberIds);
+    await createConversation(groupName, type, memberIds, selectedImage);
     onClose();
   };
-  
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+
+    // Đọc ảnh và chuyển ảnh về dạng string base 64
+    reader.readAsDataURL(file);
+
+    // event handler
+    reader.onload = async () => {
+      const base64Image = reader.result;
+      setSelectedImage(base64Image);
+    };
+  };
+
   return (
     <div 
       className={styles.overlay}
@@ -46,6 +64,23 @@ export const GroupConversationModal = ({ friends, createConversation, onClose, i
           placeholder="Nhập tên nhóm..."
           value={groupName}
           onChange={(e) => setGroupName(e.target.value)} />
+
+          <div className={styles.avatarWrapper}>
+            <div className={styles.avatarContainer}>
+              <img src={selectedImage || '/images/avatar.png'}
+                alt='Profile Picture'
+                className={styles.avatar} />
+              <label className={styles.uploadAvatarSection}>
+                <Camera className={styles.cameraIcon} />
+                <input
+                  type="file"
+                  accept='image/*'
+                  className={styles.inputAvatar}
+                  onChange={handleImageUpload}
+                />
+              </label>
+            </div>
+          </div>
 
         <div className={styles.friendList}>
           {friends && friends.map((friend) => (

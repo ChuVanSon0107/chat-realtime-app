@@ -27,7 +27,7 @@
 
 .bubble {
   background: #f3f4f6;
-  padding: 2px;
+  padding: 0px 5px;
   border-radius: 14px;
 }
 
@@ -46,7 +46,7 @@
 .text {
   white-space: pre-wrap;
   word-break: break-word;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .rightTime {
@@ -61,4 +61,31 @@
   color: #6b7280;
   margin-top: 0px;
   align-self: flex-start;
+}
+
+/* Wrapper của avatar */
+.tip {
+  position: relative;
+  display: inline-block;
+}
+
+.tip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 50%;
+  left: calc(100% + 8px);     
+  transform: translateY(-50%); 
+
+  background: rgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+
+  white-space: nowrap;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  z-index: 999;
 }

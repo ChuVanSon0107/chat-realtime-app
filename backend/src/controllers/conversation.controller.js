@@ -4,7 +4,7 @@ import { io, onlineUsers } from '../lib/socket.js';
 
 export const createConversation = async (req, res) => {
   try {
-    const { memberIds, name, type } = req.body;
+    const { memberIds, name, type, groupPic } = req.body;
     const userId = req.user.id;
 
     if (!type) {
@@ -61,7 +61,7 @@ export const createConversation = async (req, res) => {
       }
 
       // Tạo hội thoại
-      const conversation = await Conversation.create({ name: "", type: "personal", creatorId: userId });
+      const conversation = await Conversation.create({ name: "", type: "personal", creatorId: userId, groupPic: "" });
       const conversationId = conversation.id;
 
       // Thêm thành viên
@@ -85,7 +85,7 @@ export const createConversation = async (req, res) => {
     // Nhắn tin nhóm
     if (type === "group") {
       // Tạo nhóm
-      const conversation = await Conversation.create({ name, type, creatorId: userId });
+      const conversation = await Conversation.create({ name, type, creatorId: userId, groupPic });
       const conversationId = conversation.id;
 
       // Thêm thành viên

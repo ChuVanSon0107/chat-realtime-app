@@ -14,12 +14,12 @@ export const useFriendStore = create((set, get) => ({
 
   // Lấy danh sách bạn bè
   fetchFriends: async () => {
+    get().clearSearch();
+
     try {
       set({ isLoadingFriends: true });
       const res = await axiosInstance.get('/friends');
       set({ friends: res.data });
-
-      toast.success("Lấy danh sách bạn bè thành công");
     } catch (error) {
       console.error("❌ Lỗi trong fetchFriends:", error);
       toast.error(error.response.data.message);
@@ -31,12 +31,12 @@ export const useFriendStore = create((set, get) => ({
 
   // Lấy lời mời kết bạn
   fetchFriendRequests: async () => {
+    get().clearSearch();
+
     try {
       set({ isLoadingFriendRequests: true });
       const res = await axiosInstance.get('/friend-requests');
       set({ friendRequests: res.data.received });
-
-      toast.success("Lấy danh sách lời mời kết bạn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong fetchFriendRequests:", error);
       toast.error(error.response.data.message);
@@ -50,6 +50,7 @@ export const useFriendStore = create((set, get) => ({
   acceptFriendRequest: async (requestId) => {
     try {
       await axiosInstance.post(`/friend-requests/${requestId}/accept`);
+      set({ friendRequests: get().friendRequests.filter((friendRequest) => Number(friendRequest.requestId) !== Number(requestId)) });
       toast.success("Chấp nhận kết bạn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong acceptFriendRequest:", error);
@@ -61,6 +62,7 @@ export const useFriendStore = create((set, get) => ({
   declineFriendRequest: async (requestId) => {
     try {
       await axiosInstance.post(`/friend-requests/${requestId}/decline`);
+      set({ friendRequests: get().friendRequests.filter((friendRequest) => Number(friendRequest.requestId) !== Number(requestId)) });
       toast.success("Từ chối kết bạn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong declineFriendRequest:", error);
@@ -78,7 +80,6 @@ export const useFriendStore = create((set, get) => ({
         set({ isSearching: true});
         const res = await axiosInstance.get(`/users/search?q=${q}`);
         set({ searchResults: res.data });
-        toast.success("Tìm kiếm bạn bè thành công");
       } catch (error) {
         console.error("❌ Lỗi trong searchUsers:", error);
         toast.error(error.response.data.message);
@@ -106,6 +107,4 @@ export const useFriendStore = create((set, get) => ({
   clearSearch: () => {
     set({ searchResults: [] });
   },
-
-
 }));

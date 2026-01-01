@@ -72,7 +72,7 @@ export const acceptFriendRequest = async (req, res) => {
 
     await Friendship.create({ user1Id, user2Id, requestId });
 
-    return res.status(200).json({ message: "Chấp nhận lời mời kết bạn thành công", request });
+    return res.status(200).json({ message: "Chấp nhận lời mời kết bạn thành công", requestId });
   } catch(error) {
     console.error("❌ Lỗi trong acceptFriendRequest controller: ", error);
     return  res.status(500).json({ message: "Lỗi server!" });
@@ -95,7 +95,7 @@ export const declineFriendRequest = async (req, res) => {
 
     await FriendRequest.delete({ requestId });
 
-    return res.status(200).json({ message: "Từ chối lời mời kết bạn thành công" });
+    return res.status(200).json({ message: "Từ chối lời mời kết bạn thành công", requestId });
   } catch (error) {
     console.error("❌ Lỗi trong declineFriendRequest controller:", error);
     return  res.status(500).json({ message: "Lỗi server!" });

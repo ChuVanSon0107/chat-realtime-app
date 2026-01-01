@@ -5,12 +5,13 @@ import styles from './PersonalConversationModal.module.css';
 export const PersonalConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
   const type = "personal";
   const name = "";
+  const groupPic = "";
   const [selectedId, setSelectedId] = useState();
 
   const handleCreate = async () => {
     if (!selectedId || isCreatingConversation) return;
 
-    await createConversation(name, type, [selectedId]);
+    await createConversation(name, type, [selectedId], groupPic);
     onClose();
   }
 

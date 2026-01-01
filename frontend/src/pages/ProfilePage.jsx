@@ -46,32 +46,32 @@ export const ProfilePage = () => {
   const [activeTab, setActiveTab] = useState("friends");
 
   const renderContent = () => {
-    switch(activeTab) {
+    switch (activeTab) {
       case "friends":
         return (
-        <Friends 
-          friends={friends}
-          fetchFriends={fetchFriends}
-          isLoadingFriends={isLoadingFriends}
-        />);
+          <Friends
+            friends={friends}
+            fetchFriends={fetchFriends}
+            isLoadingFriends={isLoadingFriends}
+          />);
       case "requests":
         return (
-        <FriendRequests
-          friendRequests={friendRequests}
-          fetchFriendRequests={fetchFriendRequests}
-          acceptFriendRequest={acceptFriendRequest}
-          declineFriendRequest={declineFriendRequest}
-        />);
+          <FriendRequests
+            friendRequests={friendRequests}
+            fetchFriendRequests={fetchFriendRequests}
+            acceptFriendRequest={acceptFriendRequest}
+            declineFriendRequest={declineFriendRequest}
+          />);
       case "search":
         return (
-        <FriendSearch
-          authUser={authUser}
-          searchResults={searchResults}
-          isSearching={isSearching}
-          searchUsers={searchUsers}
-          isSendingFriendRequest={isSendingFriendRequest}
-          sendFriendRequest={sendFriendRequest}
-        />);
+          <FriendSearch
+            authUser={authUser}
+            searchResults={searchResults}
+            isSearching={isSearching}
+            searchUsers={searchUsers}
+            isSendingFriendRequest={isSendingFriendRequest}
+            sendFriendRequest={sendFriendRequest}
+          />);
       default:
         return null;
     }
@@ -80,18 +80,18 @@ export const ProfilePage = () => {
   return (
     <>
       <NavBar />
-      
+
       <div className={styles.profilePage}>
         <div className={styles.profilePageBody}>
           {/* Left section */}
           <div className={styles.leftSection}>
             <div className={styles.avatarContainer}>
               <img src={selectedImage || authUser.profilePic || '/images/avatar.png'}
-                alt='Profile Picture' 
-                className={styles.avatar}/>
+                alt='Profile Picture'
+                className={styles.avatar} />
               <label className={styles.uploadAvatarSection}>
                 <Camera className={styles.cameraIcon} />
-                <input 
+                <input
                   type="file"
                   accept='image/*'
                   onChange={handleImageUpload}
@@ -100,7 +100,7 @@ export const ProfilePage = () => {
                 />
               </label>
             </div>
-            
+
             {/* Right section */}
             <div className={styles.informationContainer}>
               <div className={styles.information}>
@@ -127,7 +127,7 @@ export const ProfilePage = () => {
           <div className={styles.rightSection}>
             <FriendTabs activeTab={activeTab} setActiveTab={setActiveTab} />
             <div className={styles.contentWrapper}>
-              { renderContent() }
+              {renderContent()}
             </div>
           </div>
         </div>

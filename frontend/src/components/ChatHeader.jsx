@@ -14,6 +14,7 @@ export const ChatHeader = ({ conversation, authUser, selectConversation }) => {
     avatar = friend?.profilePic || "/images/avatar.png";
   } else {
     title = conversation.name || "Nhóm chat";
+    avatar = conversation.groupPic || "/images/avatar.png";
   }
 
   return (

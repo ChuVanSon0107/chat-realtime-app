@@ -25,7 +25,6 @@ export const useChatStore = create ((set, get) => ({
     try {
       const res = await axiosInstance.get('/conversations');
       set({ conversations: res.data });
-      toast.success("Lấy danh sách các cuộc hội thoại thành công");
     } catch (error) {
       console.error("❌ Lỗi trong fetchConversations:", error);
       toast.error(error.response.data.message);
@@ -35,15 +34,13 @@ export const useChatStore = create ((set, get) => ({
   },  
 
   // Tạo cuộc hội thoại
-  createConversation: async (name, type, memberIds) => {
+  createConversation: async (name, type, memberIds, groupPic) => {
     set({ isCreatingConversation: true });
     try {
-      const res = await axiosInstance.post('/conversations', { name, type, memberIds });
+      const res = await axiosInstance.post('/conversations', { name, type, memberIds, groupPic });
       set((state) => ({
         conversations: [...state.conversations, res.data]
       }));
-
-      toast.success("Tạo cuộc hội thoại thành công");
     } catch (error) {
       console.error("❌ Lỗi trong createConversation:", error);
       toast.error(error.response.data.message);
@@ -92,8 +89,6 @@ export const useChatStore = create ((set, get) => ({
         cursor: res.data.nextCursor,
         hasMore: res.data.hasMore
       }));
-
-      toast.success("Lấy danh sách tin nhắn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong fetchMessages:", error);
       toast.error(error.response.data.message);
@@ -116,7 +111,6 @@ export const useChatStore = create ((set, get) => ({
           c.id === conversationId ? { ...c, lastMessage: res.data} : c
         )
       }));
-      toast.success("Đã gửi tin nhắn thành công");
     } catch (error) {
       console.error("❌ Lỗi trong sendMessage:", error);
       toast.error(error.response.data.message);
@@ -145,7 +139,6 @@ export const useChatStore = create ((set, get) => ({
       set((state) => ({
         messages: [...state.messages, message],
       }));
-
     } catch (error) {
       console.error("❌ Lỗi trong updateMessage:", error);
       toast.error(error.response.data.message);

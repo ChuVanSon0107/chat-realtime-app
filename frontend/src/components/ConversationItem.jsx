@@ -1,7 +1,8 @@
 import styles from "./ConversationItem.module.css";
+import formatDateTime from '../lib/formatDateTime.js';
 
 export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation }) => { 
-  const { members, lastMessage, type, name } = conversation;
+  const { members, lastMessage, type, name, groupPic } = conversation;
 
   // Chat cá nhân => lấy người còn lại
   const friend =
@@ -12,10 +13,11 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
   const avatar =
     type === "personal"
       ? friend?.profilePic || "/images/avatar.png"
-      : "/images/avatar.png";
+      : groupPic || "/images/avatar.png";
 
   const displayName = (type === "personal") ? friend?.fullName : name;
 
+  // Tin nhắn cuối cùng
   const senderId = lastMessage?.senderId;
   const sender = members.find(m => Number(m.id) === Number(senderId));
   let lastText;
@@ -29,6 +31,7 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
     }
   }
 
+  // Chưa được chọn => mới chọn
   const isSelected = (selectedConversation?.id === conversation.id);
 
   const handleClick = async () => {
@@ -43,7 +46,10 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
 
       <div className={styles.info}>
         <div className={styles.name}>{displayName}</div>
-        <div className={styles.lastMessage}>{lastText}</div>
+        <div className={styles.lastLine}>
+          <span className={styles.lastMessage}>{lastText}</span>
+          { lastMessage?.createdAt && <span className={styles.time}>{formatDateTime(lastMessage?.createdAt)}</span> }
+        </div>
       </div>
     </div>
   );

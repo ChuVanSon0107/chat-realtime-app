@@ -18,16 +18,17 @@ export const Conversation = {
     return result.recordset[0];
   },
 
-  async create({ name, type, creatorId }) {
+  async create({ name, type, creatorId, groupPic }) {
     const connection = await getConnection();
     const result = await connection
       .request()
       .input('name', sql.NVarChar(100), name)
       .input('type', sql.VarChar(20), type)
       .input('creatorId', sql.BigInt, creatorId)
+      .input('groupPic', sql.VarChar(sql.MAX), groupPic)
       .query(`
-        INSERT INTO Conversation (type, name, creatorId)
-        VALUES (@type, @name, @creatorId);
+        INSERT INTO Conversation (type, name, creatorId, groupPic)
+        VALUES (@type, @name, @creatorId, @groupPic);
         
         SELECT SCOPE_IDENTITY() AS id;
         `);
@@ -70,7 +71,7 @@ export const Conversation = {
       .request()
       .input('userId', sql.BigInt, userId)
       .query(`
-        SELECT C.id, type, name, creatorId,
+        SELECT C.id, type, name, creatorId, C.groupPic,
 
         -- Lấy members
         (
@@ -83,7 +84,8 @@ export const Conversation = {
 
         -- Lấy last message
         (
-          SELECT TOP 1 *
+          SELECT TOP 1 M.id , M.conversationId, M.senderId,
+            M.content, M.image, FORMAT(M.createdAt, 'yyyy-MM-ddTHH:mm:ss.fff') AS createdAt
           FROM Message AS M
           WHERE M.conversationId = C.id
           ORDER BY M.createdAt DESC
@@ -94,7 +96,7 @@ export const Conversation = {
         JOIN ConversationMember AS CM
         ON C.id = CM.conversationId
         WHERE CM.userId = @userId
-        GROUP BY C.id, type, name, creatorId;
+        GROUP BY C.id, type, name, creatorId, groupPic;
         `);
 
     return result.recordset.map((c) => ({
@@ -124,7 +126,7 @@ export const Conversation = {
       .request()
       .input('conversationId', sql.BigInt, conversationId)
       .query(`
-        SELECT C.id, type, name, creatorId,
+        SELECT C.id, type, name, creatorId, C.groupPic,
 
         -- Lấy members
         (
@@ -139,7 +141,7 @@ export const Conversation = {
         JOIN ConversationMember AS CM
         ON C.id = CM.conversationId
         WHERE C.id = @conversationId
-        GROUP BY C.id, type, name, creatorId;
+        GROUP BY C.id, type, name, creatorId, groupPic;
         `);
 
     const conversation = result.recordset[0];
