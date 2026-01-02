@@ -14,6 +14,23 @@
   background-color: lightblue;
 }
 
+.avatarWrapper {
+  position: relative;
+  width: 50px;
+  height: 50px;
+}
+
+.status {
+  position: absolute;
+  right: -8px;
+  bottom: -8px;
+  width: 12px;
+  height: 12px;
+  background-color: #4BB543; 
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
 .avatar {
   width: 60px;
   height: 60px;

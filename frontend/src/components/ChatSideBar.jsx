@@ -3,7 +3,7 @@ import { ConversationItem } from './ConversationItem.jsx';
 import styles from './ChatSideBar.module.css';
 import { Section } from './Section.jsx';
 
-export const ChatSideBar = ({ authUser, conversations, selectConversation, selectedConversation, setShowPersonalModal,setShowGroupModal }) => {
+export const ChatSideBar = ({ authUser, conversations, selectConversation, selectedConversation, setShowPersonalModal, setShowGroupModal, onlineUsers }) => {
   const [showGroupChat, setShowGroupChat] = useState(false);
   const [showPersonalChat, setShowPersonalChat] = useState(false);
 
@@ -29,6 +29,7 @@ export const ChatSideBar = ({ authUser, conversations, selectConversation, selec
                   authUser={authUser}
                   selectConversation={selectConversation}
                   selectedConversation={selectedConversation}
+                  onlineUsers={onlineUsers}
                 />)
               )}
           </div>
@@ -53,6 +54,7 @@ export const ChatSideBar = ({ authUser, conversations, selectConversation, selec
                   authUser={authUser}
                   selectConversation={selectConversation}
                   selectedConversation={selectedConversation}
+                  onlineUsers={onlineUsers}
                 />)
               )}
           </div>

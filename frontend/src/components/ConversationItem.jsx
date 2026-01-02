@@ -1,7 +1,7 @@
 import styles from "./ConversationItem.module.css";
 import formatDateTime from '../lib/formatDateTime.js';
 
-export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation }) => { 
+export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation, onlineUsers }) => { 
   const { members, lastMessage, type, name, groupPic } = conversation;
 
   // Chat cá nhân => lấy người còn lại
@@ -9,6 +9,11 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
     type === "personal"
       ? members.find(m => Number(m.id) !== Number(authUser.id))
       : null;
+
+  const isOnline = 
+    type === "personal" 
+      ? onlineUsers.includes(String(friend?.id))
+      : false;
 
   const avatar =
     type === "personal"
@@ -42,7 +47,11 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
 
   return (
     <div className={`${styles.item} ${isSelected ? styles.active : ""}`} onClick={handleClick}>
-      <img src={avatar} className={styles.avatar} />
+      <div className={styles.avatarWrapper}>
+        <img src={avatar} className={styles.avatar} />
+
+        {isOnline && <span className={styles.status}></span>}
+      </div>
 
       <div className={styles.info}>
         <div className={styles.name}>{displayName}</div>

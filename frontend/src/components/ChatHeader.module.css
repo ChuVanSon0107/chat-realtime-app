@@ -14,10 +14,14 @@
   z-index: 10;
 }
 
-.header > div {
+.left {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+}
+
+.avatarWrapper {
+  position: relative;
 }
 
 .avatar {
@@ -26,6 +30,25 @@
   border-radius: 50%;
   object-fit: cover;
   flex-shrink: 0;
+}
+
+.status {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+
+  width: 14px;
+  height: 14px;
+  background-color: #4BB543;
+  border-radius: 50%;
+
+  border: 2px solid white; 
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .title {
@@ -37,6 +60,12 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 200px;
+}
+
+.sub {
+  margin-top: 2px;
+  font-size: 13px;
+  color: gray;
 }
 
 .closeButton {
@@ -61,4 +90,3 @@
 .closeButton:hover {
   background-color: #f3f4f6;
 }
-

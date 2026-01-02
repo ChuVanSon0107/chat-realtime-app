@@ -8,6 +8,7 @@ import { useFriendStore } from "../stores/useFriendStore.js";
 import styles from './ChatPage.module.css';
 import { PersonalConversationModal } from "../components/PersonalConversationModal.jsx";
 import { GroupConversationModal } from "../components/GroupConversationModal.jsx";
+import { useSocketStore } from "../stores/useSocketStore.js";
 
 export const ChatPage = () => {
   const authUser = useAuthStore(state => state.authUser);
@@ -24,7 +25,8 @@ export const ChatPage = () => {
   const fetchFriends = useFriendStore(state => state.fetchFriends)
   const createConversation = useChatStore(state =>  state.createConversation);
   const isCreatingConversation = useChatStore(state => state.isCreatingConversation);
-  const hasMore = useChatStore(state => state.hasMore)
+  const hasMore = useChatStore(state => state.hasMore);
+  const onlineUsers = useSocketStore(state => state.onlineUsers);
 
   const [showPersonalModal, setShowPersonalModal] = useState(false);
   const [showGroupModal, setShowGroupModal] = useState(false);
@@ -45,6 +47,7 @@ export const ChatPage = () => {
           selectedConversation={selectedConversation}
           setShowPersonalModal={setShowPersonalModal}
           setShowGroupModal={setShowGroupModal}
+          onlineUsers={onlineUsers}
         />
         <ChatWindow
           authUser={authUser}
@@ -56,6 +59,7 @@ export const ChatPage = () => {
           isLoadingMessages={isLoadingMessages}
           fetchMessages={fetchMessages}
           hasMore={hasMore}
+          onlineUsers={onlineUsers}
         />
       </div>
 

@@ -52,6 +52,7 @@ CREATE TABLE Conversation (
 	name NVARCHAR(100),
 	creatorId BIGINT,
 	createdAt DATETIME NOT NULL DEFAULT GETDATE(),
+	groupPic VARCHAR(MAX) NULL DEFAULT(''),
 
 	CONSTRAINT FK_converation_creator FOREIGN KEY (creatorId) REFERENCES Users(id)
 );
@@ -130,8 +131,6 @@ BEGIN
 	SET updatedAt = GETDATE()
 	WHERE id IN (SELECT id FROM inserted);
 END;
-
-
 
 
 -- Lấy User ra
