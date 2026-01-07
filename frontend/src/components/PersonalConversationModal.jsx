@@ -6,7 +6,15 @@ export const PersonalConversationModal = ({ friends, createConversation, onClose
   const type = "personal";
   const name = "";
   const groupPic = "";
-  const [selectedId, setSelectedId] = useState();
+  const [selectedId, setSelectedId] = useState(null);
+
+  const handleSelectFriend = async (friend) => {
+    if (!selectedId || selectedId !== friend.id) {
+      setSelectedId(friend.id);
+    } else {
+      setSelectedId(null);
+    }
+  };
 
   const handleCreate = async () => {
     if (!selectedId || isCreatingConversation) return;
@@ -39,7 +47,7 @@ export const PersonalConversationModal = ({ friends, createConversation, onClose
             <div 
               key={friend.id}
               className={`${styles.friendItem} ${ selectedId === friend.id ? styles.selected : "" }`}
-              onClick={() => setSelectedId(friend.id)}
+              onClick={() => handleSelectFriend(friend)}
             >
               <img src={friend.profilePic || "/images/avatar.png"} />
               <span>{friend.fullName}</span>
