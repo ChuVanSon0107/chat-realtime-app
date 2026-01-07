@@ -92,10 +92,7 @@ CREATE TABLE ConversationRead (
 	CONSTRAINT FK_read_user FOREIGN KEY (userId) REFERENCES Users(id)
 );
 
--- Đánh INDEX cho các bảng (WHERE/JOIN/ORDER BY -> cho vào key, SELECT -> cho vào INCLUDE)
-CREATE NONCLUSTERED INDEX idx_friendship_user1
-ON Friendship (user1Id, user2Id);
-
+-- Đánh INDEX cho các bảng 
 CREATE NONCLUSTERED INDEX idx_friendRequest_receiver_status 
 ON FriendRequest (receiverId, createdAt DESC)
 INCLUDE (senderId);
@@ -111,10 +108,6 @@ INCLUDE (conversationId, role, joinedAt);
 CREATE NONCLUSTERED INDEX idx_message_Message_created
 ON Message (conversationId, createdAt DESC, id DESC)
 INCLUDE (senderId, content, image, isDeleted);
-
-CREATE NONCLUSTERED INDEX idx_message_conversationId
-ON Message (conversationId, id DESC)
-INCLUDE (senderId, content, image, createdAt, isDeleted);
 
 CREATE NONCLUSTERED INDEX idx_conversationRead_user
 ON ConversationRead (userId)

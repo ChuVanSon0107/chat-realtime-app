@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { axiosInstance } from '../lib/axios.js';
 import toast from 'react-hot-toast';
-import { useSocketStore } from './useSocketStore.js';
+import { useChatStore } from './useChatStore.js';
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -55,8 +55,10 @@ export const useAuthStore = create((set, get) => ({
 
   // Gọi api đăng xuất của server
   signout: async () => {
+    const resetChat = useChatStore.getState().resetChat;
     try {
       await axiosInstance.post('/auth/signout');
+      resetChat();
       set({ authUser: null });
       toast.success("Đăng xuất thành công!");
     } catch (error) {

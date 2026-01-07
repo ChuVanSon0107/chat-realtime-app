@@ -76,6 +76,17 @@ export const useChatStore = create ((set, get) => ({
     });
   },
 
+  resetChat: () => {
+    set({
+      selectedConversation: null,
+      messages: [],
+      cursor: null,
+      hasMore: true,
+      isLoadingMessages: false,
+      isSendingMessage: false,
+    });
+  },
+
   // Lấy danh sách tin nhắn
   fetchMessages: async () => {
     const { cursor, hasMore, isLoadingMessages, selectedConversation } = get();
