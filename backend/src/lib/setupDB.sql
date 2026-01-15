@@ -140,3 +140,12 @@ SELECT * FROM ConversationMember;
 SELECT * FROM ConversationRead;
 
 SELECT * FROM Message;
+
+DELETE FROM ConversationMember
+WHERE conversationId = 2;
+
+DELETE FROM ConversationRead
+WHERE conversationId = 2;
+
+DELETE FROM Conversation
+WHERE id = 2;

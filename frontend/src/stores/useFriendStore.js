@@ -21,8 +21,8 @@ export const useFriendStore = create((set, get) => ({
       const res = await axiosInstance.get('/friends');
       set({ friends: res.data });
     } catch (error) {
-      toast.error("Lỗi trong fetchFriends");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
       set({ friends: [] });
     } finally {
       set({ isLoadingFriends: false });
@@ -38,8 +38,8 @@ export const useFriendStore = create((set, get) => ({
       const res = await axiosInstance.get('/friend-requests');
       set({ friendRequests: res.data.received });
     } catch (error) {
-      toast.error("Lỗi trong fetchFriendRequests");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
       set({ friendRequests: [] });
     } finally {
       set({ isLoadingFriendRequests: false });
@@ -53,8 +53,8 @@ export const useFriendStore = create((set, get) => ({
       set({ friendRequests: get().friendRequests.filter((friendRequest) => Number(friendRequest.requestId) !== Number(requestId)) });
       toast.success("Chấp nhận kết bạn thành công");
     } catch (error) {
-      toast.error("Lỗi trong acceptFriendRequest");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } 
   },
 
@@ -65,8 +65,8 @@ export const useFriendStore = create((set, get) => ({
       set({ friendRequests: get().friendRequests.filter((friendRequest) => Number(friendRequest.requestId) !== Number(requestId)) });
       toast.success("Từ chối kết bạn thành công");
     } catch (error) {
-      toast.error("Lỗi trong declineFriendRequest");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } 
   },
 
@@ -81,8 +81,8 @@ export const useFriendStore = create((set, get) => ({
         const res = await axiosInstance.get(`/users/search?q=${q}`);
         set({ searchResults: res.data });
       } catch (error) {
-        toast.error("Lỗi trong searchUsers");
-        console.error(error);
+        toast.error(error.response.data.message);
+        console.log(error);
       } finally {
         set({ isSearching: false });
       }
@@ -96,7 +96,7 @@ export const useFriendStore = create((set, get) => ({
       await axiosInstance.post('/friend-requests', { receiverId, message });
       toast.success("Gửi lời mời kết bạn thành công thành công");
     } catch (error) {
-      toast.error("Lỗi trong sendFriendRequests");
+      toast.error(error.response.data.message);
       console.error(error);
     } finally { 
       set({ isSendingFriendRequest: false });

@@ -26,8 +26,8 @@ export const useChatStore = create ((set, get) => ({
       const res = await axiosInstance.get('/conversations');
       set({ conversations: res.data });
     } catch (error) {
-      toast.error("❌ Lỗi trong fetchConversations");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } finally {
       set({ isLoadingConversations: false });
     }
@@ -51,8 +51,8 @@ export const useChatStore = create ((set, get) => ({
         conversations: [...state.conversations, res.data]
       }));
     } catch (error) {
-      toast.error("Lỗi trong createGroupConversation");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } finally {
       set({ isCreatingConversation: false });
     }
@@ -71,8 +71,8 @@ export const useChatStore = create ((set, get) => ({
         conversations: [...state.conversations, res.data]
       }));
     } catch (error) {
-      toast.error("Lỗi trong createPersonalConversation");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } finally {
       set({ isCreatingConversation: false });
     }
@@ -130,8 +130,8 @@ export const useChatStore = create ((set, get) => ({
         hasMore: res.data.hasMore
       }));
     } catch (error) {
-      toast.error("Lỗi trong fetchMessages");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } finally {
       set({ isLoadingMessages: false });
     }
@@ -157,8 +157,8 @@ export const useChatStore = create ((set, get) => ({
         )
       }));
     } catch (error) {
-      toast.error("Lỗi trong sendMessage");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     } finally {
       set({ isSendingMessage: false });
     }
@@ -185,8 +185,8 @@ export const useChatStore = create ((set, get) => ({
         messages: [...state.messages, message],
       }));
     } catch (error) {
-      toast.error("Lỗi trong updateMessage");
-      console.error(error);
+      toast.error(error.response.data.message);
+      console.log(error);
     }
   },
 

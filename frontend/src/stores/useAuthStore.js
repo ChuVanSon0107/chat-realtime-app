@@ -33,7 +33,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Tạo tài khoản thành công");
     } catch (error) {
-      toast.error("Lỗi trong đăng kí");
+      toast.error(error.response.data.message);
       console.log(error);
     } finally {
       set({ isSigningUp: false });
@@ -48,7 +48,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Đăng nhập thành công!");
     } catch (error) {
-      toast.error("Lỗi trong đăng nhập");
+      toast.error(error.response.data.message);
       console.log(error);
     } finally {
       set({ isSigningIn: false });
@@ -64,7 +64,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: null });
       toast.success("Đăng xuất thành công!");
     } catch (error) {
-      toast.error("Lỗi trong đăng xuất");
+      toast.error(error.response.data.message);
       console.log(error);
     } 
   },
@@ -80,8 +80,8 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Cập nhật ảnh đại diện thành công!")
     } catch (error) {
+      toast.error(error.response.data.message);
       console.log(error);
-      toast.error("Lỗi trong cập nhật ảnh đại diện");
     } finally {
       set({ isUpdatingProfile: false });
     }

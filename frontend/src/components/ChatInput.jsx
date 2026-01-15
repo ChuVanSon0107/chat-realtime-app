@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import styles from './ChatInput.module.css';
 import { Camera, Send } from 'lucide-react';
+import { useRef } from 'react';
 
 export const ChatInput = ({ sendMessage, isSendingMessage }) => {
   const [text, setText] = useState("");
   const [image, setImage] = useState(null);
   const [preview, setPreview] = useState(null);
-
+  const fileInputRef = useRef(null);
 
   const handleImageChange = (event) => {
     const file = event.target.files[0];
@@ -31,6 +32,9 @@ export const ChatInput = ({ sendMessage, isSendingMessage }) => {
     setText("");
     setPreview(null);
     setImage(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
   };
 
   return (
@@ -43,6 +47,9 @@ export const ChatInput = ({ sendMessage, isSendingMessage }) => {
             onClick={() => {
               setPreview(null);
               setImage(null);
+              if (fileInputRef.current) {
+                fileInputRef.current.value = "";
+              }
             }}
           >✕</button>
         </div>
@@ -52,6 +59,7 @@ export const ChatInput = ({ sendMessage, isSendingMessage }) => {
         <label>
           <Camera className={styles.cameraIcon} />
           <input 
+            ref={fileInputRef}
             type='file'
             accept='image/*'
             hidden
