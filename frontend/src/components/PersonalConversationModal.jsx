@@ -1,11 +1,10 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import styles from './PersonalConversationModal.module.css';
+import { getImageURL } from '../lib/getImageURL.js';
 
-export const PersonalConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
+export const PersonalConversationModal = ({ friends, createPersonalConversation, onClose, isCreatingConversation }) => {
   const type = "personal";
-  const name = "";
-  const groupPic = "";
   const [selectedId, setSelectedId] = useState(null);
 
   const handleSelectFriend = async (friend) => {
@@ -19,7 +18,7 @@ export const PersonalConversationModal = ({ friends, createConversation, onClose
   const handleCreate = async () => {
     if (!selectedId || isCreatingConversation) return;
 
-    await createConversation(name, type, [selectedId], groupPic);
+    await createPersonalConversation(type, selectedId);
     onClose();
   }
 
@@ -49,7 +48,7 @@ export const PersonalConversationModal = ({ friends, createConversation, onClose
               className={`${styles.friendItem} ${ selectedId === friend.id ? styles.selected : "" }`}
               onClick={() => handleSelectFriend(friend)}
             >
-              <img src={friend.profilePic || "/images/avatar.png"} />
+              <img src={friend.profilePic ? getImageURL(friend.profilePic) : '/images/avatar.png'} />
               <span>{friend.fullName}</span>
             </div>
           )) }

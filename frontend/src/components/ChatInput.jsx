@@ -19,14 +19,8 @@ export const ChatInput = ({ sendMessage, isSendingMessage }) => {
       return;
     }
 
+    setImage(file);
     setPreview(URL.createObjectURL(file));
-
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => {
-      const base64Image = reader.result;
-      setImage(base64Image);
-    };
   };
 
   const handleSendMessage = async () => {

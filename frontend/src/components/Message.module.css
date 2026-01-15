@@ -28,15 +28,17 @@
 .bubble {
   background: #f3f4f6;
   padding: 0px 5px;
-  border-radius: 14px;
+  border-radius: 15px;
 }
 
 .mine .bubble {
+  min-width: 30px;
   background: #2a61da;
   color: white;
 }
 
 .image {
+  margin-top: 5px;
   max-width: 100%;
   max-height: 320px;
   object-fit: cover;

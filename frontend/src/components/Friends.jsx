@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styles from './Friends.module.css';
+import { getImageURL } from '../lib/getImageURL.js';
 
 export const Friends = ({ friends, fetchFriends, isLoadingFriends }) => {
 
@@ -33,7 +34,7 @@ export const Friends = ({ friends, fetchFriends, isLoadingFriends }) => {
         { friends.map((friend) => (
           <div key={friend?.id} className={styles.friendItem}>
             <img 
-              src={friend?.profilePic ? friend?.profilePic : "/images/avatar.png"} 
+              src={friend?.profilePic ? getImageURL(friend?.profilePic) : "/images/avatar.png"} 
               className={styles.avatar}
             />
 

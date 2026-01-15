@@ -1,5 +1,6 @@
 import styles from './Message.module.css';
 import formatDateTime from '../lib/formatDateTime.js';
+import { getImageURL } from '../lib/getImageURL.js';
 
 export const Message = ({ message, authUser }) => {
   const isMine = (Number(message.senderId) === Number(authUser.id));
@@ -9,7 +10,7 @@ export const Message = ({ message, authUser }) => {
       { !isMine && (
       <div className={styles.tip} data-tooltip={message.fullName}>
         <img 
-          src={message.profilePic || "/images/avatar.png"}
+          src={message.profilePic ? getImageURL(message.profilePic) : "/images/avatar.png"}
           className={styles.avatar}
         />
       </div>
@@ -18,7 +19,7 @@ export const Message = ({ message, authUser }) => {
         <div className={styles.bubble}>
           { message.image && (
             <img 
-              src={message.image}
+              src={getImageURL(message.image)}
               className={styles.image}
             />
 

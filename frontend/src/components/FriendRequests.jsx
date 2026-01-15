@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import styles from './FriendRequests.module.css';
+import { getImageURL } from '../lib/getImageURL.js';
 
 export const FriendRequests = ({ friendRequests, fetchFriendRequests, acceptFriendRequest, declineFriendRequest }) => {
   useEffect(() => {
@@ -29,7 +30,7 @@ export const FriendRequests = ({ friendRequests, fetchFriendRequests, acceptFrie
         { friendRequests.map((friendRequest) => (
         <div key={friendRequest.requestId} className={styles.requestItem}>
           <img 
-            src={friendRequest.profilePic || "/images/avatar.png" }
+            src={friendRequest.profilePic ? getImageURL(friendRequest.profilePic) : "/images/avatar.png" }
             className={styles.avatar}
           />
 

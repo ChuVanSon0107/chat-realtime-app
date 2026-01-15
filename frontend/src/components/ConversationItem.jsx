@@ -1,5 +1,6 @@
 import styles from "./ConversationItem.module.css";
 import formatDateTime from '../lib/formatDateTime.js';
+import { getImageURL } from "../lib/getImageURL.js";
 
 export const ConversationItem = ({ conversation, authUser, selectConversation, selectedConversation, onlineUsers }) => { 
   const { members, lastMessage, type, name, groupPic } = conversation;
@@ -17,8 +18,8 @@ export const ConversationItem = ({ conversation, authUser, selectConversation, s
 
   const avatar =
     type === "personal"
-      ? friend?.profilePic || "/images/avatar.png"
-      : groupPic || "/images/avatar.png";
+      ? (friend?.profilePic ? getImageURL(friend?.profilePic) : "/images/avatar.png")
+      : (groupPic ? getImageURL(groupPic) : "/images/avatar.png");
 
   const displayName = (type === "personal") ? friend?.fullName : name;
 

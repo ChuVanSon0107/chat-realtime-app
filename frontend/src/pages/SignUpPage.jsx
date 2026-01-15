@@ -18,11 +18,28 @@ export function SignUpPage() {
   const { signup, isSigningUp } = useAuthStore();
 
   const validateForm = () => {
-    if (!formData.fullName.trim()) return toast.error("Bạn chưa điền Họ và tên!");
-    if (!formData.email.trim()) return toast.error("Bạn chưa điền Email!");
-    if (!/\S+@\S+\.\S+/.test(formData.email)) return toast.error("Sai định dạng Email"); // Kiểm tra định dạng email
-    if (!formData.password) return toast.error("Bạn chưa điền Mật khẩu!");
-    if (formData.password.length < 6) return toast.error("Mật khẩu phải ít nhất 6 kí tự")
+    if (!formData.fullName.trim()) {
+      toast.error("Bạn chưa điền Họ và tên!");
+      return false;
+    } 
+
+    if (!formData.email.trim()) {
+      toast.error("Bạn chưa điền Email!");
+      return false;
+    } 
+
+    if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      toast.error("Sai định dạng Email"); // Kiểm tra định dạng email
+      return false;
+    } 
+    if (!formData.password) {
+      toast.error("Bạn chưa điền Mật khẩu!");
+      return false;
+    } 
+    if (formData.password.length < 6) {
+      toast.error("Mật khẩu phải ít nhất 6 kí tự");
+      return false;
+    } 
 
     return true;
   };

@@ -18,7 +18,7 @@ export const useAuthStore = create((set, get) => ({
       const res = await axiosInstance.get('/auth/check-auth');
       set({ authUser: res.data });
     } catch (error) {
-      console.error("❌ Lỗi trong checkAuth:", error);
+      console.error("Lỗi trong checkAuth:", error);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -33,7 +33,8 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Tạo tài khoản thành công");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong đăng kí");
+      console.log(error);
     } finally {
       set({ isSigningUp: false });
     }
@@ -47,7 +48,8 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       toast.success("Đăng nhập thành công!");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong đăng nhập");
+      console.log(error);
     } finally {
       set({ isSigningIn: false });
     }
@@ -62,20 +64,24 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: null });
       toast.success("Đăng xuất thành công!");
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong đăng xuất");
+      console.log(error);
     } 
   },
 
-  updateProfile: async (data) => {
+  updateProfile: async (profilePic) => {
     set({ isUpdatingProfile: true });
     try {
-      console.log(data);
-      const res = await axiosInstance.put("/auth/update-profile", data);
+      const formData = new FormData();
+      formData.append("profilePic", profilePic);
+
+      const res = await axiosInstance.put("/auth/update-profile", formData);
+      
       set({ authUser: res.data });
       toast.success("Cập nhật ảnh đại diện thành công!")
     } catch (error) {
-      console.log("Lỗi trong cập nhật ảnh đại diện: ", error);
-      toast.error(error.response.data.message);
+      console.log(error);
+      toast.error("Lỗi trong cập nhật ảnh đại diện");
     } finally {
       set({ isUpdatingProfile: false });
     }

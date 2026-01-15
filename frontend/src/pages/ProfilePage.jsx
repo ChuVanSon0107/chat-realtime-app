@@ -8,6 +8,7 @@ import { FriendRequests } from '../components/FriendRequests.jsx';
 import { FriendSearch } from '../components/FriendSearch.jsx';
 import { FriendTabs } from '../components/FriendTabs.jsx';
 import { useFriendStore } from '../stores/useFriendStore.js';
+import { getImageURL } from '../lib/getImageURL.js';
 
 export const ProfilePage = () => {
   const friends = useFriendStore(state => state.friends);
@@ -26,21 +27,15 @@ export const ProfilePage = () => {
   const { authUser, isUpdatingProfile, updateProfile } = useAuthStore();
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const avatar = selectedImage ? selectedImage :
+    (authUser.profilePic ? getImageURL(authUser.profilePic) : '/images/avatar.png')
+
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
     if (!file) return;
 
-    const reader = new FileReader();
-
-    // Đọc ảnh và chuyển ảnh về dạng string base 64
-    reader.readAsDataURL(file);
-
-    // event handler
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setSelectedImage(base64Image);
-      await updateProfile({ profilePic: base64Image });
-    };
+    setSelectedImage(URL.createObjectURL(file));
+    await updateProfile(file);
   };
 
   const [activeTab, setActiveTab] = useState("friends");
@@ -86,7 +81,7 @@ export const ProfilePage = () => {
           {/* Left section */}
           <div className={styles.leftSection}>
             <div className={styles.avatarContainer}>
-              <img src={selectedImage || authUser.profilePic || '/images/avatar.png'}
+              <img src={avatar}
                 alt='Profile Picture'
                 className={styles.avatar} />
               <label className={styles.uploadAvatarSection}>

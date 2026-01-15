@@ -23,7 +23,8 @@ export const ChatPage = () => {
   const fetchConversations = useChatStore(state => state.fetchConversations);
   const friends = useFriendStore(state => state.friends);
   const fetchFriends = useFriendStore(state => state.fetchFriends)
-  const createConversation = useChatStore(state =>  state.createConversation);
+  const createGroupConversation = useChatStore(state =>  state.createGroupConversation);
+  const createPersonalConversation = useChatStore(state =>  state.createPersonalConversation);
   const isCreatingConversation = useChatStore(state => state.isCreatingConversation);
   const hasMore = useChatStore(state => state.hasMore);
   const onlineUsers = useSocketStore(state => state.onlineUsers);
@@ -66,7 +67,7 @@ export const ChatPage = () => {
       { showPersonalModal && (
         <PersonalConversationModal 
           friends={friends}
-          createConversation={createConversation}
+          createPersonalConversation={createPersonalConversation}
           onClose={() => setShowPersonalModal(false)}
           isCreatingConversation={isCreatingConversation}
         />
@@ -76,7 +77,7 @@ export const ChatPage = () => {
         showGroupModal && ( 
         <GroupConversationModal
           friends={friends}
-          createConversation={createConversation}
+          createGroupConversation={createGroupConversation}
           onClose={() => setShowGroupModal(false)}
           isCreatingConversation={isCreatingConversation}
         />)

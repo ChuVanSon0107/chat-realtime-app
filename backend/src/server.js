@@ -10,18 +10,17 @@ import messageRoutes from './routes/message.route.js';
 import cors from 'cors';
 import { checkToken } from "./middlewares/auth.middleware.js";
 import { app, server } from './lib/socket.js';
+import path from 'path';
 
-// load các biến môi trường để sử dụng
+// dotenv
 dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
-// api để xác thực người dùng (đăng ký, đăng nhập, đăng xuất, kiểm tra người dùng)
-app.use(express.json({ limit: "5mb" })); // Để server có thể đọc file json trong request
-app.use(express.urlencoded({ limit: "5mb", extended: true }));
-app.use(cookieParser()); // Để đọc được cookie 
+app.use(express.json()); 
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser()); 
 
-// Cho phép frontend gửi request cho server
 app.use(
   cors({
     origin: process.env.CLIENT_URL,
@@ -34,6 +33,7 @@ app.use("/api/auth", authRoutes);
 
 // private routes
 app.use(checkToken);
+app.use("/uploads", express.static(path.join(process.cwd(), 'public', 'uploads')));
 app.use("/api/friends", friendRoutes);
 app.use("/api/friend-requests", friendRequestRoutes);
 app.use("/api/users", userRoutes);

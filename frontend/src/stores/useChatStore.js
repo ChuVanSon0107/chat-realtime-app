@@ -26,24 +26,53 @@ export const useChatStore = create ((set, get) => ({
       const res = await axiosInstance.get('/conversations');
       set({ conversations: res.data });
     } catch (error) {
-      console.error("❌ Lỗi trong fetchConversations:", error);
-      toast.error(error.response.data.message);
+      toast.error("❌ Lỗi trong fetchConversations");
+      console.error(error);
     } finally {
       set({ isLoadingConversations: false });
     }
   },  
 
   // Tạo cuộc hội thoại
-  createConversation: async (name, type, memberIds, groupPic) => {
+  createGroupConversation: async (name, type, memberIds, groupPic) => {
     set({ isCreatingConversation: true });
     try {
-      const res = await axiosInstance.post('/conversations', { name, type, memberIds, groupPic });
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("type", type);
+      memberIds.forEach(id => {
+        formData.append('memberIds', id);
+      });
+      formData.append("groupPic", groupPic);
+
+      const res = await axiosInstance.post('/conversations/group', formData);
+
       set((state) => ({
         conversations: [...state.conversations, res.data]
       }));
     } catch (error) {
-      console.error("❌ Lỗi trong createConversation:", error);
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong createGroupConversation");
+      console.error(error);
+    } finally {
+      set({ isCreatingConversation: false });
+    }
+  },
+
+  // Tạo cuộc hội thoại
+  createPersonalConversation: async (type, memberId) => {
+    set({ isCreatingConversation: true });
+    try {
+      const res = await axiosInstance.post('/conversations/personal', {
+        memberId,
+        type
+      });
+
+      set((state) => ({
+        conversations: [...state.conversations, res.data]
+      }));
+    } catch (error) {
+      toast.error("Lỗi trong createPersonalConversation");
+      console.error(error);
     } finally {
       set({ isCreatingConversation: false });
     }
@@ -101,8 +130,8 @@ export const useChatStore = create ((set, get) => ({
         hasMore: res.data.hasMore
       }));
     } catch (error) {
-      console.error("❌ Lỗi trong fetchMessages:", error);
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong fetchMessages");
+      console.error(error);
     } finally {
       set({ isLoadingMessages: false });
     }
@@ -115,7 +144,12 @@ export const useChatStore = create ((set, get) => ({
 
     set({ isSendingMessage: true });
     try {
-      const res = await axiosInstance.post('messages', { conversationId, content, image });
+      const formData = new FormData();
+      formData.append('conversationId', conversationId);
+      formData.append('content', content || "");
+      formData.append('image', image || "");
+
+      const res = await axiosInstance.post('messages', formData);
       set(state => ({
         messages: [...state.messages, res.data],
         conversations: state.conversations.map((c) => 
@@ -123,8 +157,8 @@ export const useChatStore = create ((set, get) => ({
         )
       }));
     } catch (error) {
-      console.error("❌ Lỗi trong sendMessage:", error);
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong sendMessage");
+      console.error(error);
     } finally {
       set({ isSendingMessage: false });
     }
@@ -144,15 +178,15 @@ export const useChatStore = create ((set, get) => ({
         ),
       }));
 
-      if (Number(selectedConversation.id) !== Number(message.conversationId)) return;
+      if (Number(selectedConversation?.id) !== Number(message.conversationId)) return;
 
       // cập nhật tin nhắn
       set((state) => ({
         messages: [...state.messages, message],
       }));
     } catch (error) {
-      console.error("❌ Lỗi trong updateMessage:", error);
-      toast.error(error.response.data.message);
+      toast.error("Lỗi trong updateMessage");
+      console.error(error);
     }
   },
 

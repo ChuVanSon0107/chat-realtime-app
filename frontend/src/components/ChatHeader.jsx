@@ -1,4 +1,5 @@
 import styles from './ChatHeader.module.css';
+import { getImageURL } from '../lib/getImageURL.js';
 
 export const ChatHeader = ({ conversation, authUser, selectConversation, onlineUsers }) => {
   if (!conversation) {
@@ -13,13 +14,15 @@ export const ChatHeader = ({ conversation, authUser, selectConversation, onlineU
   if (conversation.type === "personal") {
     const friend = conversation.members.find((m) => Number(m.id) !== Number(authUser.id));
     title = friend?.fullName || "Người dùng";
-    avatar = friend?.profilePic || "/images/avatar.png";
+    avatar = friend?.profilePic ? getImageURL(friend?.profilePic) : "/images/avatar.png";
 
     isOnline = onlineUsers.includes(String(friend?.id)) ? true : false;
   } else {
-    title = conversation.name || "Nhóm chat";
-    avatar = conversation.groupPic || "/images/avatar.png";
+    title = conversation?.name || "Nhóm chat";
+    avatar = conversation?.groupPic ? getImageURL(conversation?.groupPic) : "/images/avatar.png";
   }
+
+  console.log(conversation?.groupPic);
 
   return (
     <div className={styles.header}>

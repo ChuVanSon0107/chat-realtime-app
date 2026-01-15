@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import styles from './FriendSearch.module.css';
+import { getImageURL } from '../lib/getImageURL.js';
 
 export const FriendSearch = ({ authUser, searchResults, searchUsers, isSearching, sendFriendRequest, isSendingFriendRequest }) => {
   const [keyword, setKeyword] = useState("");
@@ -41,7 +42,7 @@ export const FriendSearch = ({ authUser, searchResults, searchUsers, isSearching
         { searchResults.length > 0 && searchResults.map((user) => (
           <div key={user.id} className={styles.resultItem}>
             <img 
-              src={user.profilePic ? user.profilePic : "/images/avatar.png"} 
+              src={user.profilePic ? getImageURL(user.profilePic) : "/images/avatar.png"} 
               className={styles.avatar}
             />
             

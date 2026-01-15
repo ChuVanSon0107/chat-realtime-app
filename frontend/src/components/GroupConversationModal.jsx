@@ -2,11 +2,13 @@ import styles from './GroupConversationModal.module.css'
 import { X } from 'lucide-react';
 import { useState } from 'react';
 import { Camera } from 'lucide-react';
+import { getImageURL } from '../lib/getImageURL.js';
 
-export const GroupConversationModal = ({ friends, createConversation, onClose, isCreatingConversation }) => {
+export const GroupConversationModal = ({ friends, createGroupConversation, onClose, isCreatingConversation }) => {
   const type = "group";
   const [groupName, setGroupName] = useState("");
   const [memberIds, setMemberIds] = useState([]);
+  const [groupPic, setGroupPic] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
   const selectMember = (id) => {
@@ -20,24 +22,23 @@ export const GroupConversationModal = ({ friends, createConversation, onClose, i
       return;
     }
 
-    await createConversation(groupName, type, memberIds, selectedImage);
+    await createGroupConversation(groupName, type, memberIds, groupPic);
     onClose();
   };
 
   const handleImageUpload = async (event) => {
     const file = event.target.files[0];
+
     if (!file) return;
 
-    const reader = new FileReader();
+    // giới hạn size
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Ảnh tối đa 5MB");
+      return;
+    }
 
-    // Đọc ảnh và chuyển ảnh về dạng string base 64
-    reader.readAsDataURL(file);
-
-    // event handler
-    reader.onload = async () => {
-      const base64Image = reader.result;
-      setSelectedImage(base64Image);
-    };
+    setGroupPic(file);
+    setSelectedImage(URL.createObjectURL(file));
   };
 
   return (
@@ -90,7 +91,7 @@ export const GroupConversationModal = ({ friends, createConversation, onClose, i
               onClick={() => {selectMember(friend.id)}}
             >
               <img 
-                src={friend.profilePic || "/images/avatar.png"}
+                src={friend.profilePic ?  getImageURL(friend.profilePic) : "/images/avatar.png"}
               />
               <span>{friend.fullName}</span>
             </div>
@@ -101,7 +102,7 @@ export const GroupConversationModal = ({ friends, createConversation, onClose, i
           <button onClick={onClose}>Hủy</button>
           <button
             onClick={handleCreate}
-            disabled={isCreatingConversation || !groupName.trim() || !memberIds || memberIds.length < 1}
+            disabled={isCreatingConversation || !groupName.trim() || !memberIds || memberIds.length < 2}
           >{isCreatingConversation ? "Đang tạo..." : "Tạo nhóm"}</button>
         </div>
       </div>

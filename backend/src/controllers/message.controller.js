@@ -1,28 +1,22 @@
-import { Conversation } from '../models/conversation.model.js';
 import { Message } from '../models/message.model.js';
 import { io } from '../lib/socket.js';
 
 export const sendMessage = async (req, res) => {
   try {
-    const { conversationId, content, image } = req.body;
+    const { conversationId, content } = req.body;
     const userId = req.user.id;
+    const file = req.file;
 
-    if (!conversationId) {
-      return res.status(400).json({ message: "Không có thông tin hội thoại" });
+    let imageURL = null;
+    if (file) {
+      imageURL = `/uploads/${file.filename}`;
     }
 
-    if (!content && !image) {
+    if (!content && !imageURL) {
       return res.status(400).json({ message: "Không có nội dung" });
     }
 
-    // Kiểm tra có quyền được nhắn hay không
-    const isAllowed = await Conversation.isMember({ conversationId, userId});
-
-    if (!isAllowed) {
-      return res.status(401).json({ message: "Không có quyền gửi tin nhắn" });
-    }
-
-    const message = await Message.create({ conversationId, senderId: userId, content, image });
+    const message = await Message.create({ conversationId, senderId: userId, content, image: imageURL });
 
     // socket.io => realtime
     io.to(conversationId.toString()).emit("new-message", message);
@@ -39,16 +33,6 @@ export const getMessages = async (req, res) => {
     const { cursor } = req.query;
     const { conversationId } = req.params;
     const limit = Number(req.query.limit) || 50;
-
-    if (!conversationId) {
-      return res.status(400).json({ message: "Không có thông tin cuộc hội thoại" });
-    }
-
-    // Kiểm tra thành viên
-    const isAllowed = await Conversation.isMember({ conversationId, userId });
-    if (!isAllowed) {
-      return res.status(401).json({ message: "Không có quyền gửi tin nhắn" });
-    }
 
     let messages;
     if (!cursor) {
