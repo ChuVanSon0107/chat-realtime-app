@@ -15,7 +15,7 @@ export const ChatInput = ({ sendMessage, isSendingMessage }) => {
     if (!file) return;
 
     // giới hạn size
-    if (file.size > 5 * 1024 * 1024) {
+    if (file.size > 2 * 1024 * 1024) {
       alert("Ảnh tối đa 5MB");
       return;
     }
